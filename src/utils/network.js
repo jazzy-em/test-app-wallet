@@ -1,3 +1,6 @@
+import {accessTokenKey} from '../constants/auth';
+import {getAccessToken} from '../helpers/auth';
+
 const DEFAULT_HEADERS = {
     'Cache-Control': 'no-cache',
     'pragma': 'no-cache'
@@ -13,9 +16,12 @@ const DEFAULT_OPTIONS = {
 let handler401 = () => {};
 let accessToken;
 
-const getAuthHeader = () => ({
-    Authorization: `Bearer ${accessToken}`
-});
+const getAuthHeader = () => {
+    const token = accessToken || getAccessToken();
+    return token ? {
+        Authorization: `Bearer ${token}`
+    } : {};
+};
 
 export const setNetworkOptions = options => {
     const opt = options || {};
@@ -48,7 +54,7 @@ const parseErrors = (error) => {
     switch (response.status) {
         case 401:
             handler401();
-            break;
+            throw error;
         default:
             throw error;
     }

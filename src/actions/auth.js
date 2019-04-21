@@ -16,3 +16,7 @@ export const setAuthErrorsAction = errors => ({
     type: 'AUTH_SET_AUTH_ERRORS',
     payload: errors
 });
+
+export const fetchUserInfoRequestAction = () => ({
+    type: 'AUTH_FETCH_USER_INFO_REQUEST'
+});

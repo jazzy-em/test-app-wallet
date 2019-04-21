@@ -14,12 +14,18 @@ class LoginPage extends React.PureComponent {
     state = {
         email: '',
         password: '',
-        otp: ''
+        otp: '',
+        emailError: false,
+        passwordError: false,
+        otpError: false
     };
 
     handleChange = event => {
         const name = event.target.name;
-        this.setState({[name]: event.target.value});
+        this.setState({
+            [name]: event.target.value,
+            [`${name}Error`]: false
+        });
     };
 
     onKeyPress = event => {
@@ -28,25 +34,46 @@ class LoginPage extends React.PureComponent {
         }
     };
 
-    login = () => {
-        const {redirectTo} = queryString.parse(window.location.search);
-        const {email, password, otp} = this.state;
-        this.props.loginRequest({
-            login: email,
-            password,
-            otp,
-            redirectTo
+    setError = name => {
+        this.setState({
+            [`${name}Error`]: true
+        })
+    };
+
+    validate = () => {
+        let isValid = true;
+        const fieldNames = ['email', 'password', 'otp'];
+        fieldNames.forEach((name) => {
+            if (!this.state[name]) {
+                this.setError(name);
+                isValid = false;
+            }
         });
+        return isValid;
+    };
+
+    login = () => {
+        if (this.validate()) {
+            const {redirectTo} = queryString.parse(window.location.search);
+            const {email, password, otp} = this.state;
+            this.props.loginRequest({
+                login: email,
+                password,
+                otp,
+                redirectTo
+            });
+        }
     };
 
     render() {
-        const {email, password, otp} = this.state;
+        const {email, password, otp, emailError, passwordError, otpError} = this.state;
         return (
             <AuthPageTemplate>
                 <div>
                     <TextField
                         label="E-mail"
                         name="email"
+                        error={emailError}
                         value={email}
                         onChange={this.handleChange}
                         fullWidth
@@ -59,6 +86,7 @@ class LoginPage extends React.PureComponent {
                     <TextField
                         label="Password"
                         name="password"
+                        error={passwordError}
                         value={password}
                         onChange={this.handleChange}
                         fullWidth
@@ -72,6 +100,7 @@ class LoginPage extends React.PureComponent {
                     <TextField
                         label="OTP"
                         name="otp"
+                        error={otpError}
                         value={otp}
                         onChange={this.handleChange}
                         fullWidth

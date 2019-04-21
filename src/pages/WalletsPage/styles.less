@@ -1,0 +1,54 @@
+@import '../../theme/common.less';
+@scroll-margin-top: 2px;
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  //min-width: 900px;
+  align-items: center;
+  background-color: #EDEDED;
+  justify-content: center;
+  width: 100%;
+
+  .scrollWrapper {
+    overflow-y: scroll;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    flex-direction: row;
+    margin-top: @scroll-margin-top;
+
+    .content {
+      max-width: 1432px;
+      width: 100%;
+      display: flex;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 100%;
+      align-items: flex-start;
+
+      .filterPane {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        margin: @main-margin - @scroll-margin-top @main-margin/2 @main-margin @main-margin;
+      }
+
+      .resultsPane {
+        flex-grow: 3;
+        flex-shrink: 1;
+        flex-basis: 0;
+        margin: @main-margin - @scroll-margin-top 0 0 @main-margin/2;
+        min-height: ~"calc(100vh - 48px - 32px)";
+      }
+    }
+  }
+}

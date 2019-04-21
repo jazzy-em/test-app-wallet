@@ -1,17 +1,12 @@
 import {fork, takeLatest, select, put, call} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
 import {push} from 'connected-react-router'
-import {path, flatten} from 'ramda';
+import {path} from 'ramda';
 
 import * as api from '../api';
-import {
-    setAppLoading, showNotificationAction
-} from '../actions/ui';
-import {
-    setAuthErrorsAction,
-    setUserInfoAction
-} from '../actions/auth';
-import {setNetworkOptions} from "../utils/network";
+import {setAppLoading, showNotificationAction} from '../actions/ui';
+import {setAuthErrorsAction, setUserInfoAction} from '../actions/auth';
+import {setAccessToken} from '../helpers/auth';
 
 
 export function* onSuccessfulLogin(redirectTo) {
@@ -27,7 +22,7 @@ export function* login(action) {
         const userInfo = json.user;
         const accessToken = json['access_token'];
         if (userInfo && accessToken) {
-            setNetworkOptions({accessToken});
+            setAccessToken(accessToken);
             yield put(setUserInfoAction(userInfo));
             yield call(onSuccessfulLogin, redirectTo);
         } else {
@@ -40,8 +35,12 @@ export function* login(action) {
 }
 
 export function* handleAuthErrors(e) {
-    const commonPath = ['info', 'e', 'result'];
-    const error = path([...commonPath, 'message'], e) || path([...commonPath, 'error'], e);
+    const commonPath = ['info', 'result'];
+    const needsOtp = path([...commonPath, 'needsOTP'], e);
+    const error = needsOtp ?
+        'OTP code is incorrect'
+        :
+        path([...commonPath, 'message'], e) || path([...commonPath, 'error'], e);
     yield put(setAuthErrorsAction(error ? [error] : ['Something went wrong...']));
 }
 
@@ -56,6 +55,25 @@ export function* logout() {
     yield put(setAppLoading(false));
 }
 
+export const mapErrorToAction = (e, mapping) => {
+    return e.response ? mapping[e.response.status] || mapping.defaultWithStatus || mapping.default
+        :
+        mapping.default;
+};
+
+export function* fetchUserInfo() {
+    try {
+        const userInfo = yield call(api.me);
+        console.log(userInfo);
+        yield put(setUserInfoAction(userInfo));
+    } catch (e) {
+        console.log(e);
+        const action = mapErrorToAction(e, {
+            //default: () => showNotificationAction({type: 'error'})
+        });
+        //yield put(action(e));
+    }
+}
 
 export function* loginSaga() {
     yield takeLatest('AUTH_LOGIN_REQUEST', login);
@@ -65,9 +83,14 @@ export function* logoutSaga() {
     yield takeLatest('AUTH_LOGOUT_REQUEST', logout);
 }
 
+export function* fetchUserInfoSaga() {
+    yield takeLatest('AUTH_FETCH_USER_INFO_REQUEST', fetchUserInfo);
+}
+
 
 const sagas = [
     fork(loginSaga),
-    fork(logoutSaga)
+    fork(logoutSaga),
+    fork(fetchUserInfoSaga)
 ];
 export default sagas;

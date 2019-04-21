@@ -10,6 +10,18 @@ const getBitgo = (req) => {
     return new BitGoJS.BitGo({env: 'test', accessToken});
 };
 
+const callBitgo = ({method, action, logger, params, req, res, noToken}) => {
+    const bitgo = getBitgo(noToken ? null : req);
+    const promise = action ? action(bitgo) : bitgo[method](params);
+    promise
+        .then(function(response) {
+            res.json({
+                ...response
+            });
+        })
+        .catch((e) => errorHandler(logger, res, e));
+};
+
 const errorHandler = (logger, res, e) => {
     logger.error(e);
     res.status(e.status || 500);
@@ -17,6 +29,5 @@ const errorHandler = (logger, res, e) => {
 };
 
 module.exports = {
-    getBitgo,
-    errorHandler
+    callBitgo
 };

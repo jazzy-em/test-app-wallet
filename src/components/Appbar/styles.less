@@ -1,0 +1,40 @@
+@import '../../theme/common.less';
+
+.container {
+  width: 100%;
+
+  .appBar {
+    background-color: white;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.2);
+
+    .toolBar {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      margin: 0 @main-margin;
+
+      .widthWrapper {
+        max-width: 1440px - @main-margin * 2;
+        flex-grow: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .margin {
+          width: @main-margin;
+        }
+
+        .title {
+          margin-left: @main-margin;
+          flex-grow: 1;
+          width: 0;
+        }
+
+        .username {
+          margin-right: @main-margin;
+        }
+
+      }
+    }
+  }
+}

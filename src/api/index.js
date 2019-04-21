@@ -15,4 +15,6 @@ export const login = (login, password, otp) => {
         }
     });
 };
+
+export const me = () => jsonRequest('/api/me');
 export const logout = () => {};

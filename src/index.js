@@ -17,7 +17,7 @@ import createRootReducer from './reducers';
 import saga from './sagas';
 import {setNetworkOptions} from "./utils/network";
 import {getLoginUrl} from "./helpers/routes";
-//import {fetchUserInfoRequestAction} from './actions/auth';
+import {fetchUserInfoRequestAction} from './actions/auth';
 
 const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
@@ -37,7 +37,7 @@ setNetworkOptions({
         history.push(getLoginUrl());
     }
 });
-//store.dispatch(fetchUserInfoRequestAction());
+store.dispatch(fetchUserInfoRequestAction());
 
 render(
     <MuiThemeProvider theme={theme}>
