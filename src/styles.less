@@ -1,0 +1,35 @@
+@import './theme/common.less';
+
+body {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+
+@scrollbar-background: rgba(0,0,0,0.025);
+@scrollbar-thumb-background: rgba(0,0,0,0.2);
+@scrollbar-thumb-hover-background: rgba(0,0,0,0.3);
+// Webkit-based browsers scroll customization
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: @scrollbar-background;
+}
+
+::-webkit-scrollbar-thumb {
+  background: @scrollbar-thumb-background;
+  border-radius: 3px;
+
+  &:hover {
+    background: @scrollbar-thumb-hover-background;
+  }
+}
+
+// Firefox scroll customization
+@-moz-document url-prefix() {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: @scrollbar-thumb-background @scrollbar-background;
+  }
+}

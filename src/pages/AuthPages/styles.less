@@ -1,0 +1,78 @@
+@import '../../theme/common.less';
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  background-color: #EDEDED;
+  overflow: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .formWrapper {
+    min-height: 0;
+  }
+  .form {
+    text-align: center;
+    padding: @main-margin * 3;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+    width: 300px;
+    min-height: 400px;
+    position: relative;
+
+    .errors {
+      color: red;
+      .error {
+        margin-top: 5px;
+      }
+    }
+
+    .messages {
+      position: absolute;
+      left: @main-margin * 3;
+      right: @main-margin * 3;
+      top: 50%;
+      bottom: 50%;
+      .message {
+        margin-top: 5px;
+      }
+    }
+
+    .button {
+      margin-top: @main-margin * 2.5;
+      margin-bottom: @main-margin;
+      width: 100%;
+    }
+
+    .remember {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .statusMessage {
+      margin-top: @main-margin * 3;
+    }
+
+    .stickyFooter {
+      position: absolute;
+      bottom: @main-margin * 3;
+      left: @main-margin * 3;
+      right: @main-margin * 3;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  a {
+    color: @primary;
+  }
+}
