@@ -1,7 +1,7 @@
 import React from 'react';
 import {hot} from 'react-hot-loader'
 import {Switch, Route, Redirect} from 'react-router-dom';
-import WalletsPage from './pages/WalletsPage';
+import WalletsPage from './pages/ContentPages/WalletsPage';
 import LoginPage from './pages/AuthPages/LoginPage';
 import LogoutPage from './pages/AuthPages/LogoutPage';
 import {loginUrl, logoutUrl} from './helpers/routes';

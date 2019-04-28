@@ -21,8 +21,7 @@ module.exports = ({logger}) => {
             method: 'logout',
             req,
             res,
-            logger,
-            noToken: true
+            logger
         });
     });
 

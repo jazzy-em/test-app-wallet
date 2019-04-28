@@ -1,5 +1,6 @@
 import {jsonRequest} from '../utils/network';
 
+// auth
 export const login = (login, password, otp) => {
     const body = {
         username: login,
@@ -15,6 +16,9 @@ export const login = (login, password, otp) => {
         }
     });
 };
-
 export const me = () => jsonRequest('/api/me');
-export const logout = () => {};
+
+export const logout = () => jsonRequest('/api/logout');
+
+// wallets
+export const wallets = () => jsonRequest('/api/wallets');
