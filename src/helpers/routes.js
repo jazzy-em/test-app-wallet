@@ -5,6 +5,7 @@ export const loginUrl = '/login';
 export const logoutUrl = '/logout';
 export const walletUrl = '/wallet';
 
+export const getWalletsUrl = () => '/';
 export const getWalletUrl = id => `${walletUrl}/${id}`;
 export const getLoginUrl = () => {
     const pathName = window.location.pathname;

@@ -28,7 +28,7 @@ const ContentPageTemplate = ({title, children}) => {
 };
 
 ContentPageTemplate.propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.node,
     children: PropTypes.node
 };
 

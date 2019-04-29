@@ -3,10 +3,12 @@ import {connectRouter} from 'connected-react-router';
 
 import auth from './auth';
 import ui from './ui';
+import wallet from './wallet';
 
 const reducer = {
     auth,
-    ui
+    ui,
+    wallet
 };
 
 export default (history) => combineReducers({

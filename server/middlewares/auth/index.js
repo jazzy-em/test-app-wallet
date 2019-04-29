@@ -4,7 +4,7 @@ const {callBitgo} = require('../../services/bitgo');
 module.exports = ({logger}) => {
     const router = new express.Router();
 
-    router.use('/login', function(req, res) {
+    router.post('/login', function(req, res) {
         const {username, password, otp} = req.body;
         callBitgo({
             method: 'authenticate',
@@ -16,7 +16,7 @@ module.exports = ({logger}) => {
         });
     });
 
-    router.use('/logout', function(req, res) {
+    router.get('/logout', function(req, res) {
         callBitgo({
             method: 'logout',
             req,
@@ -25,9 +25,19 @@ module.exports = ({logger}) => {
         });
     });
 
-    router.use('/me', function(req, res) {
+    router.get('/me', function(req, res) {
         callBitgo({
             method: 'me',
+            req,
+            res,
+            logger
+        });
+    });
+
+    router.post('/unlock', function(req, res) {
+        const {otp} = req.body;
+        callBitgo({
+            action: bitgo => bitgo.unlock({otp}),
             req,
             res,
             logger

@@ -1,0 +1,1 @@
+export const formatBtc = satoshi => satoshi / 100000000;
