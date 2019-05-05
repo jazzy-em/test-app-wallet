@@ -1,12 +1,13 @@
-import {fork, takeLatest, select, put, call} from 'redux-saga/effects';
+import {fork, takeLatest, put, call} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
 import {push} from 'connected-react-router'
 import {path} from 'ramda';
 
 import * as api from '../api';
-import {setAppLoading, showNotificationAction} from '../actions/ui';
+import {setAppLoading} from '../actions/ui';
 import {setAuthErrorsAction, setUserInfoAction} from '../actions/auth';
 import {setAccessToken} from '../helpers/auth';
+import {handleErrors} from './common';
 
 
 export function* onSuccessfulLogin(redirectTo) {
@@ -55,23 +56,12 @@ export function* logout() {
     yield put(setAppLoading(false));
 }
 
-export const mapErrorToAction = (e, mapping) => {
-    return e.response ? mapping[e.response.status] || mapping.defaultWithStatus || mapping.default
-        :
-        mapping.default;
-};
-
 export function* fetchUserInfo() {
     try {
         const userInfo = yield call(api.me);
-        console.log(userInfo);
         yield put(setUserInfoAction(userInfo));
     } catch (e) {
-        console.log(e);
-        const action = mapErrorToAction(e, {
-            //default: () => showNotificationAction({type: 'error'})
-        });
-        //yield put(action(e));
+        yield call(handleErrors, e);
     }
 }
 

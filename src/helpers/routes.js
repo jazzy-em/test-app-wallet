@@ -1,6 +1,3 @@
-import queryString from 'query-string';
-import {stringifySearchPart} from '../utils/url';
-
 export const loginUrl = '/login';
 export const logoutUrl = '/logout';
 export const walletUrl = '/wallet';

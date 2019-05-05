@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Icon from '@material-ui/core/Icon/Icon';
+import Icon from '@material-ui/core/Icon';
 import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles.less';
 
@@ -113,8 +113,6 @@ class Notifications extends React.PureComponent {
         notifications: []
     };
 }
-
-
 
 export default connect(
     store => ({

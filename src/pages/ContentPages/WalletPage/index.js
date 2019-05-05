@@ -2,40 +2,54 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import {Link} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 
 import styles from './styles.less';
 
 import ContentPageTemplate from '../ContentPageTemplate';
-import {loadWalletRequestAction, loadWalletsRequestAction} from '../../../actions/wallet';
+import {clearWalletAction, loadWalletRequestAction} from '../../../actions/wallet';
 import {getWallet} from '../../../selectors/wallet';
-import {formatBtc} from '../../../utils/formats';
+import {formatWalletBalance} from '../../../utils/formats';
 import {getWalletsUrl} from '../../../helpers/routes';
-import * as api from '../../../api';
+import SendMoneyButton from '../../../components/SendMoneyButton';
 
-const WalletPage = ({wallet, match, loadWallet}) => {
-    useEffect(() => {loadWallet(match.params.id)}, []);
+const WalletPage = ({wallet, match, loadWallet, clearWallet}) => {
+    useEffect(() => {
+        loadWallet(match.params.id);
+        return clearWallet;
+    }, []);
 
-    const sendCoins = (address, amount, walletPassphrase) => {
-        api.unlock('000000')
-            .then(() =>
-                api.sendCoins({walletId: wallet.id, address, amount, walletPassphrase})
-            );
-    };
+    const renderTitle = () => (
+        <div className={styles.header}>
+            <IconButton
+                component={Link}
+                to={getWalletsUrl()}
+            >
+                <Icon>keyboard_backspace</Icon>
+            </IconButton>
+            {wallet ? (
+                <>
+                    {wallet.label}
+                    <div className={styles.spacer}/>
+                    <Typography variant="h6">{formatWalletBalance(wallet)}</Typography>
+                </>
+            ) : 'Loading...'}
+        </div>
+    );
 
     return (
-        <ContentPageTemplate title={wallet && wallet.label || 'Loading...'}>
-            <Link to={getWalletsUrl()}>Back to wallets</Link>
-            {wallet && <div>
-                {formatBtc(wallet.balance)} BTC
-            </div>}
-            <div>
-                <Typography variant="h5">Send money:</Typography>
-                <Button onClick={() => {
-                    sendCoins('2NFsRApi8N687YNLvpt7p612E3KR4n6XsYV', '10000', '');
-                }}>Send</Button>
-            </div>
+        <ContentPageTemplate title={renderTitle()}>
+            {wallet && (
+                <>
+                    <Typography variant="caption">Receive address:</Typography>
+                    <Typography>{wallet.receiveAddress.address}</Typography>
+                    <div className={styles.sendMoney}>
+                        <SendMoneyButton fromId={wallet.id} coin={wallet.coin}/>
+                    </div>
+                </>
+            )}
         </ContentPageTemplate>
     )
 };
@@ -43,11 +57,13 @@ const WalletPage = ({wallet, match, loadWallet}) => {
 WalletPage.propTypes = {
     match: PropTypes.object,
     wallet: PropTypes.object,
-    loadWallet: PropTypes.func
+    loadWallet: PropTypes.func,
+    clearWallet: PropTypes.func
 };
 
 export default connect(store => ({
     wallet: getWallet(store)
 }), {
-    loadWallet: loadWalletRequestAction
+    loadWallet: loadWalletRequestAction,
+    clearWallet: clearWalletAction
 })(WalletPage);

@@ -1,4 +1,4 @@
-import {jsonRequest} from '../utils/network';
+import {jsonPostRequest, jsonRequest} from '../utils/network';
 
 // auth
 export const login = (login, password, otp) => {
@@ -8,13 +8,7 @@ export const login = (login, password, otp) => {
         otp
     };
 
-    return jsonRequest(`/api/login`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return jsonPostRequest(`/api/login`, body);
 };
 export const me = () => jsonRequest('/api/me');
 
@@ -25,13 +19,7 @@ export const unlock = (otp) => {
         otp
     };
 
-    return jsonRequest(`/api/unlock`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return jsonPostRequest(`/api/unlock`, body);
 };
 
 // wallets
@@ -45,11 +33,5 @@ export const sendCoins = ({walletId, address, amount, walletPassphrase}) => {
         walletPassphrase
     };
 
-    return jsonRequest(`/api/wallet/${walletId}/sendCoins`, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return jsonPostRequest(`/api/wallet/${walletId}/sendCoins`, body);
 };

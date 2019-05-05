@@ -1,11 +1,11 @@
-import {fork, takeLatest, select, put, call} from 'redux-saga/effects';
+import {fork, takeLatest, takeEvery, put, call} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import {push} from 'connected-react-router'
-import {path} from 'ramda';
 
 import * as api from '../api';
 import {setAppLoading, showNotificationAction} from '../actions/ui';
-import {setWalletAction, setWalletsAction} from '../actions/wallet';
+import {setSendMoneyStepAction, setWalletAction, setWalletsAction} from '../actions/wallet';
+import {SEND_COINS_STEPS} from '../constants/wallet';
+import {handleErrors} from './common';
 
 
 export function* loadWallets() {
@@ -33,10 +33,20 @@ export function* loadWallet(action) {
     yield put(setAppLoading(false));
 }
 
-export function* handleErrors(e) {
-    const commonPath = ['info', 'result'];
-    const error = path([...commonPath, 'message'], e) || path([...commonPath, 'error'], e);
-    yield put(showNotificationAction({type: 'error', message: error || 'Something went wrong...'}));
+export function* sendCoins(action) {
+    const {fromId, to, amount, passphrase, otp} = action.payload;
+    yield put(setAppLoading(true));
+    yield put(setSendMoneyStepAction(SEND_COINS_STEPS.inProgress));
+    try {
+        yield call(api.unlock, otp);
+        yield call(api.sendCoins, {walletId: fromId, address: to, amount, walletPassphrase: passphrase});
+        yield put(showNotificationAction({message: 'Money are successfully sent!'}));
+        yield put(setSendMoneyStepAction(SEND_COINS_STEPS.success));
+    } catch (e) {
+        yield call(handleErrors, e);
+    }
+    yield put(setAppLoading(false));
+    yield put(setSendMoneyStepAction(SEND_COINS_STEPS.initial));
 }
 
 export function* loadWalletsSaga() {
@@ -47,8 +57,13 @@ export function* loadWalletSaga() {
     yield takeLatest('WALLET_LOAD_WALLET_REQUEST', loadWallet);
 }
 
+export function* sendCoinsSaga() {
+    yield takeEvery('WALLET_SEND_COINS_REQUEST', sendCoins);
+}
+
 const sagas = [
     fork(loadWalletsSaga),
-    fork(loadWalletSaga)
+    fork(loadWalletSaga),
+    fork(sendCoinsSaga)
 ];
 export default sagas;

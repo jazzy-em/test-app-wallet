@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography/Typography';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.less';
 
 import Appbar from '../../components/Appbar/index';
 import AppLoadingIndicator from '../../components/AppLoadingIndicator/index';
+import {getLoading} from '../../selectors/ui';
 
-const ContentPageTemplate = ({title, children}) => {
+const ContentPageTemplate = ({title, loading, children}) => {
     return (
         <div className={styles.container}>
             <Appbar />
@@ -16,7 +18,8 @@ const ContentPageTemplate = ({title, children}) => {
             <div className={styles.scrollWrapper}>
                 <div className={styles.content}>
                     <Paper className={styles.paper}>
-                        <Typography variant="h4">
+                        {loading && <div className={styles.loading} />}
+                        <Typography variant="h5" className={styles.title}>
                             {title}
                         </Typography>
                         {children}
@@ -29,7 +32,14 @@ const ContentPageTemplate = ({title, children}) => {
 
 ContentPageTemplate.propTypes = {
     title: PropTypes.node,
-    children: PropTypes.node
+    children: PropTypes.node,
+    loading: PropTypes.bool
 };
 
-export default ContentPageTemplate;
+export default connect(
+    store => {
+        return {
+            loading: getLoading(store)
+        };
+    }
+)(ContentPageTemplate)

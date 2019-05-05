@@ -1,6 +1,4 @@
 const express = require('express');
-const config = require('config');
-
 const {callBitgo} = require('../../services/bitgo');
 
 module.exports = function({logger}) {

@@ -1,4 +1,3 @@
-import {accessTokenKey} from '../constants/auth';
 import {getAccessToken} from '../helpers/auth';
 
 const DEFAULT_HEADERS = {
@@ -50,10 +49,12 @@ const handleErrors = (response) => {
 };
 
 const parseErrors = (error) => {
-    const {response} = error;
+    const {info, response} = error;
     switch (response.status) {
         case 401:
-            handler401();
+            if (info.needsOTP !== true) {
+                handler401();
+            }
             throw error;
         default:
             throw error;
@@ -69,4 +70,12 @@ export const request = (url, options) => {
 };
 
 export const jsonRequest = (url, options) => request(url, options).then(res => res.json());
+export const jsonPostRequest = (url, body, options = {}) => jsonRequest(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    ...options
+});
 export const textRequest = (url, options) => request(url, options).then(res => res.text());

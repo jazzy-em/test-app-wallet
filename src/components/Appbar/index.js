@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import classnames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -10,6 +9,7 @@ import { Link } from 'react-router-dom'
 
 import styles from './styles.less';
 import Logo from './logo.svg';
+
 import {getUserInfo} from '../../selectors/auth';
 import {getLoginUrl, getLogoutUrl} from '../../helpers/routes';
 import {isLoggedIn} from '../../helpers/auth';
