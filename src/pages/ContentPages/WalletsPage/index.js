@@ -20,7 +20,7 @@ const tableHead = [
     }
 ];
 
-const WalletsPage = ({wallets = [], loadWallets, history}) => {
+export const WalletsPage = ({wallets = [], loadWallets, history}) => {
     useEffect(() => {loadWallets()}, []);
 
     const tableRows = wallets.map((wallet) => ({

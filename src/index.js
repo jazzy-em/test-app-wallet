@@ -15,8 +15,8 @@ import App from './App';
 import {theme} from './theme';
 import createRootReducer from './reducers';
 import saga from './sagas';
-import {setNetworkOptions} from "./utils/network";
-import {getLoginUrl} from "./helpers/routes";
+import {setNetworkOptions} from './utils/network';
+import {getLoginUrl} from './helpers/routes';
 import {fetchUserInfoRequestAction} from './actions/auth';
 
 const history = createBrowserHistory();

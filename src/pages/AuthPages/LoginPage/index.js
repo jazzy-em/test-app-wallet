@@ -122,6 +122,6 @@ class LoginPage extends React.PureComponent {
     }
 }
 
-export default connect(store => ({}), {
+export default connect(() => ({}), {
     loginRequest: loginRequestAction
 })(LoginPage);

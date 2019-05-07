@@ -8,7 +8,7 @@ export const login = (login, password, otp) => {
         otp
     };
 
-    return jsonPostRequest(`/api/login`, body);
+    return jsonPostRequest('/api/login', body);
 };
 export const me = () => jsonRequest('/api/me');
 
@@ -19,7 +19,7 @@ export const unlock = (otp) => {
         otp
     };
 
-    return jsonPostRequest(`/api/unlock`, body);
+    return jsonPostRequest('/api/unlock', body);
 };
 
 // wallets

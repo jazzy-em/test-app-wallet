@@ -1,5 +1,4 @@
 import {fork, takeLatest, put, call} from 'redux-saga/effects';
-import {delay} from 'redux-saga';
 import {push} from 'connected-react-router'
 import {path} from 'ramda';
 
