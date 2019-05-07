@@ -25,6 +25,7 @@ export const unlock = (otp) => {
 // wallets
 export const wallets = () => jsonRequest('/api/wallets');
 export const wallet = id => jsonRequest(`/api/wallet/${id}`);
+export const transfers = (id, limit = 20) => jsonRequest(`/api/wallet/${id}/transfers?limit=${limit}`);
 
 export const sendCoins = ({walletId, address, amount, walletPassphrase}) => {
     const body = {

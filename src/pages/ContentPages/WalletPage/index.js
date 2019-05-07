@@ -10,12 +10,13 @@ import styles from './styles.less';
 
 import ContentPageTemplate from '../ContentPageTemplate';
 import {clearWalletAction, loadWalletRequestAction} from '../../../actions/wallet';
-import {getWallet} from '../../../selectors/wallet';
+import {getTransfers, getWallet} from '../../../selectors/wallet';
 import {formatWalletBalance} from '../../../utils/formats';
 import {getWalletsUrl} from '../../../helpers/routes';
 import SendMoneyButton from '../../../components/SendMoneyButton';
+import WalletTransfers from '../../../components/WalletTransfers';
 
-const WalletPage = ({wallet, match, loadWallet, clearWallet}) => {
+const WalletPage = ({wallet, transfers, match, loadWallet, clearWallet}) => {
     useEffect(() => {
         loadWallet(match.params.id);
         return clearWallet;
@@ -48,6 +49,8 @@ const WalletPage = ({wallet, match, loadWallet, clearWallet}) => {
                     <div className={styles.sendMoney}>
                         <SendMoneyButton fromId={wallet.id} coin={wallet.coin}/>
                     </div>
+                    <Typography variant="h6">Last transactions:</Typography>
+                    <WalletTransfers transfers={transfers}/>
                 </>
             )}
         </ContentPageTemplate>
@@ -57,12 +60,14 @@ const WalletPage = ({wallet, match, loadWallet, clearWallet}) => {
 WalletPage.propTypes = {
     match: PropTypes.object,
     wallet: PropTypes.object,
+    transfers: PropTypes.array,
     loadWallet: PropTypes.func,
     clearWallet: PropTypes.func
 };
 
 export default connect(store => ({
-    wallet: getWallet(store)
+    wallet: getWallet(store),
+    transfers: getTransfers(store)
 }), {
     loadWallet: loadWalletRequestAction,
     clearWallet: clearWalletAction

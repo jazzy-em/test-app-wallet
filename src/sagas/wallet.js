@@ -1,9 +1,8 @@
-import {fork, takeLatest, takeEvery, put, call} from 'redux-saga/effects';
-import {delay} from 'redux-saga';
+import {fork, takeLatest, takeEvery, put, call, all, delay} from 'redux-saga/effects';
 
 import * as api from '../api';
 import {setAppLoading, showNotificationAction} from '../actions/ui';
-import {setSendMoneyStepAction, setWalletAction, setWalletsAction} from '../actions/wallet';
+import {setSendMoneyStepAction, setTransfersAction, setWalletAction, setWalletsAction} from '../actions/wallet';
 import {SEND_COINS_STEPS} from '../constants/wallet';
 import {handleErrors} from './common';
 
@@ -12,7 +11,7 @@ export function* loadWallets() {
     yield put(setAppLoading(true));
     try {
         const json = yield call(api.wallets) || {};
-        const wallets = json.wallets && json.wallets.map(wallet => wallet['_wallet']);
+        const wallets = json.wallets;
         yield put(setWalletsAction(wallets));
     } catch (e) {
         yield call(handleErrors, e);
@@ -20,17 +19,35 @@ export function* loadWallets() {
     yield put(setAppLoading(false));
 }
 
-export function* loadWallet(action) {
-    yield put(setAppLoading(true));
+export function* silentLoadWallet(walletId) {
     try {
-        const walletId = action.payload;
-        const json = yield call(api.wallet, walletId);
-        const wallet = json && json['_wallet'];
-        yield put(setWalletAction(wallet));
+        const [walletResponse, transfersResponse] = yield all([
+            call(api.wallet, walletId),
+            call(api.transfers, walletId)
+        ]);
+        yield put(setWalletAction(walletResponse));
+        const transfers = transfersResponse && transfersResponse.transfers;
+        yield put(setTransfersAction(transfers));
     } catch (e) {
         yield call(handleErrors, e);
     }
+}
+
+export function* loadWallet(action) {
+    yield put(setAppLoading(true));
+    yield call(silentLoadWallet, action.payload);
     yield put(setAppLoading(false));
+}
+
+export function* walletPolling(action) {
+    if (action.type === 'WALLET_CLEAR_WALLET') {
+        // it will stop polling
+        return;
+    }
+    while (true) {
+        yield delay(10000);
+        yield call(silentLoadWallet, action.payload.id);
+    }
 }
 
 export function* sendCoins(action) {
@@ -57,6 +74,10 @@ export function* loadWalletSaga() {
     yield takeLatest('WALLET_LOAD_WALLET_REQUEST', loadWallet);
 }
 
+export function* walletPollingSaga() {
+    yield takeLatest(['WALLET_SET_WALLET', 'WALLET_CLEAR_WALLET'], walletPolling);
+}
+
 export function* sendCoinsSaga() {
     yield takeEvery('WALLET_SEND_COINS_REQUEST', sendCoins);
 }
@@ -64,6 +85,7 @@ export function* sendCoinsSaga() {
 const sagas = [
     fork(loadWalletsSaga),
     fork(loadWalletSaga),
-    fork(sendCoinsSaga)
+    fork(sendCoinsSaga),
+    fork(walletPollingSaga)
 ];
 export default sagas;

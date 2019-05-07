@@ -17,7 +17,9 @@ export const setWalletAction = wallet => ({
     payload: wallet
 });
 
-export const clearWalletAction = () => setWalletAction(null);
+export const clearWalletAction = () => ({
+    type: 'WALLET_CLEAR_WALLET'
+});
 
 export const sendCoinsRequestAction = (transactionInfo) => ({
     type: 'WALLET_SEND_COINS_REQUEST',
@@ -27,4 +29,9 @@ export const sendCoinsRequestAction = (transactionInfo) => ({
 export const setSendMoneyStepAction = step => ({
     type: 'WALLET_SET_SEND_MONEY_STEP',
     payload: step
+});
+
+export const setTransfersAction = transfers => ({
+    type: 'WALLET_SET_TRANSFERS',
+    payload: transfers
 });

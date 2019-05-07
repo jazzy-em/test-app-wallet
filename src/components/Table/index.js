@@ -11,30 +11,32 @@ import styles from './styles.less';
 
 export const Table = ({head = [], rows = []}) => {
     return (
-        <MUITable>
-            <TableHead>
-                <TableRow>
-                    {head.map(column => (
-                        <TableCell key={column.id}>
-                            {column.label}
-                        </TableCell>
-                    ))}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {rows.map((row, i) => (
-                    <TableRow
-                        key={row.id || i}
-                        onClick={row.onClick}
-                        className={classnames(styles.row, {[styles.clickableRow]: row.onClick})}
-                    >
+        <div className={styles.container}>
+            <MUITable>
+                <TableHead>
+                    <TableRow>
                         {head.map(column => (
-                            <TableCell key={column.id}>{row[column.id]}</TableCell>
+                            <TableCell key={column.id}>
+                                {column.label}
+                            </TableCell>
                         ))}
                     </TableRow>
-                ))}
-            </TableBody>
-        </MUITable>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row, i) => (
+                        <TableRow
+                            key={row.id || i}
+                            onClick={row.onClick}
+                            className={classnames(styles.row, {[styles.clickableRow]: row.onClick})}
+                        >
+                            {head.map(column => (
+                                <TableCell key={column.id}>{row[column.id]}</TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </MUITable>
+        </div>
     );
 };
 
