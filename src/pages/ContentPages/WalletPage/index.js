@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {path} from 'ramda';
 import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.less';
@@ -12,7 +13,7 @@ import SendMoneyButton from '../../../components/SendMoneyButton';
 import WalletTransfers from '../../../components/WalletTransfers';
 import WalletHeader from '../../../components/WalletHeader';
 
-const WalletPage = ({wallet, transfers, match, loadWallet, clearWallet}) => {
+export const WalletPage = ({wallet, transfers, match, loadWallet, clearWallet}) => {
     useEffect(() => {
         loadWallet(match.params.id);
         return clearWallet;
@@ -23,9 +24,9 @@ const WalletPage = ({wallet, transfers, match, loadWallet, clearWallet}) => {
             {wallet && (
                 <>
                     <Typography variant="caption">Receive address:</Typography>
-                    <Typography>{wallet.receiveAddress.address}</Typography>
+                    <Typography>{path(['receiveAddress', 'address'], wallet)}</Typography>
                     <div className={styles.sendMoney}>
-                        <SendMoneyButton fromId={wallet.id} coin={wallet.coin}/>
+                        <SendMoneyButton walletId={wallet.id} coin={wallet.coin}/>
                     </div>
                     <Typography variant="h6">Last transactions:</Typography>
                     <WalletTransfers transfers={transfers}/>

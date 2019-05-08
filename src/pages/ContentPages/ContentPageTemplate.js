@@ -10,7 +10,7 @@ import Appbar from '../../components/Appbar/index';
 import AppLoadingIndicator from '../../components/AppLoadingIndicator/index';
 import {getLoading} from '../../selectors/ui';
 
-const ContentPageTemplate = ({title, loading, children}) => {
+export const ContentPageTemplate = ({title, loading, children}) => {
     return (
         <div className={styles.container}>
             <Appbar />

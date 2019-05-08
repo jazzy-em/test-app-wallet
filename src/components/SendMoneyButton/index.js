@@ -39,7 +39,7 @@ export class SendMoneyButton extends React.PureComponent {
         if (this.validate()) {
             const {to, amount, passphrase, otp} = this.state;
             this.props.sendCoins({
-                fromId: this.props.fromId,
+                fromId: this.props.walletId,
                 to,
                 amount: btcToSatoshi(amount),
                 passphrase,
@@ -179,7 +179,7 @@ export class SendMoneyButton extends React.PureComponent {
     }
 
     static propTypes = {
-        fromId: PropTypes.string.isRequired,
+        walletId: PropTypes.string.isRequired,
         step: PropTypes.oneOf(Object.values(SEND_COINS_STEPS)),
         coin: PropTypes.string.isRequired,
         sendCoins: PropTypes.func.isRequired

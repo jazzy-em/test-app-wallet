@@ -5,35 +5,14 @@ import {connect} from 'react-redux';
 import ContentPageTemplate from '../ContentPageTemplate';
 import {loadWalletsRequestAction} from '../../../actions/wallet';
 import {getWallets} from '../../../selectors/wallet';
-import {formatWalletBalance} from '../../../utils/formats';
-import {getWalletUrl} from '../../../helpers/routes';
-import Table from '../../../components/Table';
-
-const tableHead = [
-    {
-        id: 'label',
-        label: 'Wallet label'
-    },
-    {
-        id: 'balance',
-        label: 'Coin balance'
-    }
-];
+import WalletsTable from '../../../components/WalletsTable';
 
 export const WalletsPage = ({wallets = [], loadWallets, history}) => {
     useEffect(() => {loadWallets()}, []);
 
-    const tableRows = wallets.map((wallet) => ({
-        label: wallet.label,
-        balance: formatWalletBalance(wallet),
-        onClick: () => {
-            history.push(getWalletUrl(wallet.id))
-        }
-    }));
-
     return (
         <ContentPageTemplate title="Your wallets">
-            <Table head={tableHead} rows={tableRows} />
+            <WalletsTable wallets={wallets} history={history} />
         </ContentPageTemplate>
     )
 };
