@@ -8,7 +8,6 @@ import {setAuthErrorsAction, setUserInfoAction} from '../actions/auth';
 import {setAccessToken} from '../helpers/auth';
 import {handleErrors} from './common';
 
-
 export function* onSuccessfulLogin(redirectTo) {
     yield put(setAuthErrorsAction([]));
     yield put(push(redirectTo || '/'));

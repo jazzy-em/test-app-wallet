@@ -8,8 +8,9 @@ import styles from '../styles.less';
 import {logoutRequestAction} from '../../../actions/auth';
 import AuthPageTemplate from '../AuthPageTemplate';
 import {getUserInfo} from '../../../selectors/auth';
+import {isLoggedIn} from '../../../helpers/auth';
 
-class LogoutPage extends React.PureComponent {
+export class LogoutPage extends React.PureComponent {
     componentDidMount() {
         this.logout();
     }
@@ -25,7 +26,7 @@ class LogoutPage extends React.PureComponent {
     };
 
     render() {
-        const isAuthorized = this.props.userInfo;
+        const isAuthorized = isLoggedIn(this.props.userInfo);
         return (
             <AuthPageTemplate>
                 <div className={styles.statusMessage}>

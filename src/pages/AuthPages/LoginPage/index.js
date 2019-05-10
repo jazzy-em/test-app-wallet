@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import TextField from '@material-ui/core/TextField/TextField';
-import Button from '@material-ui/core/Button/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import styles from '../styles.less';
 
@@ -10,7 +10,7 @@ import {loginRequestAction} from '../../../actions/auth';
 import AuthPageTemplate from '../AuthPageTemplate';
 import queryString from 'query-string';
 
-class LoginPage extends React.PureComponent {
+export class LoginPage extends React.PureComponent {
     state = {
         email: '',
         password: '',

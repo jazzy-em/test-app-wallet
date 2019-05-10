@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.less';
 
-import Appbar from '../../components/Appbar/index';
-import AppLoadingIndicator from '../../components/AppLoadingIndicator/index';
+import Appbar from '../../components/Appbar';
+import AppLoadingIndicator from '../../components/AppLoadingIndicator';
 import {getLoading} from '../../selectors/ui';
 
 export const ContentPageTemplate = ({title, loading, children}) => {
