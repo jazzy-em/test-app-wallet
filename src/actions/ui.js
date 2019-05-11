@@ -1,8 +1,8 @@
 import {getNotificationId} from '../helpers/ui';
 
-export const setAppLoading = bool => ({
+export const setAppLoading = loading => ({
     type: 'UI_SET_APP_LOADING',
-    payload: bool
+    payload: loading
 });
 
 export const showNotificationAction = ({message, type, duration}) => ({

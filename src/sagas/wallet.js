@@ -57,7 +57,7 @@ export function* sendCoins(action) {
     try {
         yield call(api.unlock, otp);
         yield call(api.sendCoins, {walletId: fromId, address: to, amount, walletPassphrase: passphrase});
-        yield put(showNotificationAction({message: 'Money are successfully sent!'}));
+        yield put(showNotificationAction({message: 'Money was successfully sent!'}));
         yield put(setSendMoneyStepAction(SEND_COINS_STEPS.success));
     } catch (e) {
         yield call(handleErrors, e);
