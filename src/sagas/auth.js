@@ -19,7 +19,7 @@ export function* login(action) {
     try {
         const json = yield call(api.login, login, password, otp) || {};
         const userInfo = json.user;
-        const accessToken = json['access_token'];
+        const accessToken = json.access_token;
         if (userInfo && accessToken) {
             setAccessToken(accessToken);
             yield put(setUserInfoAction(userInfo));

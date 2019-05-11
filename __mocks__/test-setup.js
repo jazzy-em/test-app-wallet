@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import {storageMock, URL_PREFIX, getUrlPrefix} from './test-utils';
 import Adapter from 'enzyme-adapter-react-16';
 import {configure} from 'enzyme';

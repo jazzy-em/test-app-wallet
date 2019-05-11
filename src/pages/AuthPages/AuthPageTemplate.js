@@ -10,13 +10,13 @@ import AppLoadingIndicator from '../../components/AppLoadingIndicator';
 import {getAuthErrors} from '../../selectors/auth';
 import {setAuthErrorsAction} from '../../actions/auth';
 
-class AuthPageTemplate extends React.PureComponent {
+export class AuthPageTemplate extends React.PureComponent {
     componentDidMount() {
         this.props.setAuthErrors([]);
     }
 
     render() {
-        const {children, errors} = this.props;
+        const {children, errors = []} = this.props;
         return (
             <div className={styles.container}>
                 <AppLoadingIndicator onTop={true}/>
