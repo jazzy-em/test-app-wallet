@@ -6,6 +6,7 @@ import {setSendMoneyStepAction, setTransfersAction, setWalletAction, setWalletsA
 import {SEND_COINS_STEPS} from '../constants/wallet';
 import {handleErrors} from './common';
 
+export const WALLET_POLLING_INTERVAL = 10000;
 
 export function* loadWallets() {
     yield put(setAppLoading(true));
@@ -45,7 +46,7 @@ export function* walletPolling(action) {
         return;
     }
     while (true) {
-        yield delay(10000);
+        yield delay(WALLET_POLLING_INTERVAL);
         yield call(silentLoadWallet, action.payload.id);
     }
 }
