@@ -51,9 +51,11 @@ describe('ContentPageTemplate tests', () => {
         });
 
         it('should connect loading prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedContentPageTemplate />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedContentPageTemplate />
+                </Provider>
+            );
             const template = component.find(ContentPageTemplate);
             expect(template.prop('loading')).toBe(true);
         });

@@ -1,7 +1,7 @@
 const BitGoJS = require('bitgo');
 const {path} = require('ramda');
 
-const getBitgo = (req) => {
+const getBitgo = req => {
     let accessToken;
     if (req) {
         const authHeader = path(['headers', 'authorization'], req);
@@ -19,7 +19,7 @@ const callBitgo = ({method, action, logger, params, req, res, noToken}) => {
                 ...response
             });
         })
-        .catch((e) => errorHandler(logger, res, e));
+        .catch(e => errorHandler(logger, res, e));
 };
 
 const errorHandler = (logger, res, e) => {

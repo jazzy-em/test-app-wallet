@@ -10,7 +10,7 @@ import {loadWalletsRequestAction} from '../../../../actions/wallet';
 
 describe('WalletsPage tests', () => {
     afterEach(() => {
-       jest.restoreAllMocks();
+        jest.restoreAllMocks();
     });
     describe('Pure component behavior', () => {
         it('should render main parts', () => {
@@ -32,7 +32,7 @@ describe('WalletsPage tests', () => {
 
         it('should call loadWallets prop on mount', () => {
             const loadWallets = jest.fn();
-            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div/>);
+            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div />);
             mount(<WalletsPage loadWallets={loadWallets} />);
             expect(loadWallets).toHaveBeenCalled();
         });
@@ -54,16 +54,20 @@ describe('WalletsPage tests', () => {
         });
 
         it('should connect wallets prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedWalletsPage />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedWalletsPage />
+                </Provider>
+            );
             expect(component.find(WalletsPage).prop('wallets')).toBe(initial.wallet.wallets);
         });
 
         it('should connect loadWallets prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedWalletsPage />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedWalletsPage />
+                </Provider>
+            );
             expect(component.find(WalletsPage).prop('loadWallets')()).toMatchObject(loadWalletsRequestAction());
         });
     });

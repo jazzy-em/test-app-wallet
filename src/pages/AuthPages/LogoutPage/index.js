@@ -30,9 +30,7 @@ export class LogoutPage extends React.PureComponent {
         return (
             <AuthPageTemplate>
                 <div className={styles.statusMessage}>
-                    <Typography>
-                        {isAuthorized ? 'Logging out...' : 'You have successfully logged out'}
-                    </Typography>
+                    <Typography>{isAuthorized ? 'Logging out...' : 'You have successfully logged out'}</Typography>
                 </div>
             </AuthPageTemplate>
         );
@@ -42,13 +40,16 @@ export class LogoutPage extends React.PureComponent {
         match: PropTypes.object,
         userInfo: PropTypes.object,
         logoutRequest: PropTypes.func
-    }
+    };
 }
 
-export default connect(store => {
-    return {
-        userInfo: getUserInfo(store)
-    };
-}, {
-    logoutRequest: logoutRequestAction
-})(LogoutPage);
+export default connect(
+    store => {
+        return {
+            userInfo: getUserInfo(store)
+        };
+    },
+    {
+        logoutRequest: logoutRequestAction
+    }
+)(LogoutPage);

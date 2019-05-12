@@ -1,5 +1,5 @@
 import {fork, takeLatest, put, call} from 'redux-saga/effects';
-import {push} from 'connected-react-router'
+import {push} from 'connected-react-router';
 import {path} from 'ramda';
 
 import * as api from '../api';
@@ -36,10 +36,9 @@ export function* login(action) {
 export function* handleAuthErrors(e) {
     const commonPath = ['info', 'result'];
     const needsOtp = path([...commonPath, 'needsOTP'], e);
-    const error = needsOtp ?
-        'OTP code is incorrect'
-        :
-        path([...commonPath, 'message'], e) || path([...commonPath, 'error'], e);
+    const error = needsOtp
+        ? 'OTP code is incorrect'
+        : path([...commonPath, 'message'], e) || path([...commonPath, 'error'], e);
     yield put(setAuthErrorsAction(error ? [error] : ['Something went wrong...']));
 }
 
@@ -75,10 +74,5 @@ export function* fetchUserInfoSaga() {
     yield takeLatest('AUTH_FETCH_USER_INFO_REQUEST', fetchUserInfo);
 }
 
-
-const sagas = [
-    fork(loginSaga),
-    fork(logoutSaga),
-    fork(fetchUserInfoSaga)
-];
+const sagas = [fork(loginSaga), fork(logoutSaga), fork(fetchUserInfoSaga)];
 export default sagas;

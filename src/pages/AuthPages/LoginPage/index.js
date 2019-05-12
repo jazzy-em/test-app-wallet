@@ -37,13 +37,13 @@ export class LoginPage extends React.PureComponent {
     setError = name => {
         this.setState({
             [`${name}Error`]: true
-        })
+        });
     };
 
     validate = () => {
         let isValid = true;
         const fieldNames = ['email', 'password', 'otp'];
-        fieldNames.forEach((name) => {
+        fieldNames.forEach(name => {
             if (!this.state[name]) {
                 this.setError(name);
                 isValid = false;
@@ -119,9 +119,12 @@ export class LoginPage extends React.PureComponent {
     static propTypes = {
         match: PropTypes.object,
         loginRequest: PropTypes.func
-    }
+    };
 }
 
-export default connect(() => ({}), {
-    loginRequest: loginRequestAction
-})(LoginPage);
+export default connect(
+    () => ({}),
+    {
+        loginRequest: loginRequestAction
+    }
+)(LoginPage);

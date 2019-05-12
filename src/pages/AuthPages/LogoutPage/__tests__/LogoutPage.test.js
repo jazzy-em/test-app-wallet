@@ -21,7 +21,7 @@ describe('Logout page tests', () => {
         it('should call logoutRequest prop on component mount if userInfo prop is defined', () => {
             const logoutRequest = jest.fn();
             jest.spyOn(AuthPageTemplate, 'type').mockImplementation(({children}) => <div>{children}</div>);
-            const component = mount(<LogoutPage logoutRequest={logoutRequest} userInfo={{}}/>);
+            const component = mount(<LogoutPage logoutRequest={logoutRequest} userInfo={{}} />);
             expect(logoutRequest).toHaveBeenCalled();
             expect(component.text()).toBe('Logging out...');
         });
@@ -51,17 +51,21 @@ describe('Logout page tests', () => {
         });
 
         it('should connect userInfo prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedLogoutPage />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedLogoutPage />
+                </Provider>
+            );
             const page = component.find(LogoutPage);
             expect(page.prop('userInfo')).toBe(initial.auth.userInfo);
         });
 
         it('should connect logoutRequest prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedLogoutPage />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedLogoutPage />
+                </Provider>
+            );
             const page = component.find(LogoutPage);
             expect(page.prop('logoutRequest')()).toEqual(logoutRequestAction());
         });

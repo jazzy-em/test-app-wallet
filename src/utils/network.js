@@ -2,7 +2,7 @@ import {getAccessToken} from '../helpers/auth';
 
 const DEFAULT_HEADERS = {
     'Cache-Control': 'no-cache',
-    'pragma': 'no-cache'
+    pragma: 'no-cache'
 };
 
 const DEFAULT_OPTIONS = {
@@ -17,9 +17,11 @@ let accessToken;
 
 const getAuthHeader = () => {
     const token = accessToken || getAccessToken();
-    return token ? {
-        Authorization: `Bearer ${token}`
-    } : {};
+    return token
+        ? {
+              Authorization: `Bearer ${token}`
+          }
+        : {};
 };
 
 export const setNetworkOptions = options => {
@@ -32,7 +34,7 @@ export const setNetworkOptions = options => {
     }
 };
 
-const handleErrors = (response) => {
+const handleErrors = response => {
     if (!response.ok) {
         const body = response.text();
         return body.then(message => {
@@ -48,7 +50,7 @@ const handleErrors = (response) => {
     return response;
 };
 
-const parseErrors = (error) => {
+const parseErrors = error => {
     const {info, response} = error;
     switch (response.status) {
         case 401:
@@ -70,12 +72,13 @@ export const request = (url, options) => {
 };
 
 export const jsonRequest = (url, options) => request(url, options).then(res => res.json());
-export const jsonPostRequest = (url, body, options = {}) => jsonRequest(url, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    ...options
-});
+export const jsonPostRequest = (url, body, options = {}) =>
+    jsonRequest(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        ...options
+    });
 export const textRequest = (url, options) => request(url, options).then(res => res.text());

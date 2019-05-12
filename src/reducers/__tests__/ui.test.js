@@ -44,7 +44,7 @@ describe('UI reducer tests', () => {
         expect(uiReducer(state, {type: 'UI_SHOW_NOTIFICATION', payload})).toEqual({
             notifications: [
                 {id: 1, type: 'error', message: 'Error message'},
-                {id:2, type: 'error', message: 'New error message'}
+                {id: 2, type: 'error', message: 'New error message'}
             ]
         });
     });
@@ -58,9 +58,7 @@ describe('UI reducer tests', () => {
         };
 
         expect(uiReducer(state, {type: 'UI_HIDE_NOTIFICATION', payload: 2})).toEqual({
-            notifications: [
-                {id: 1, type: 'error', message: 'Error message'}
-            ]
+            notifications: [{id: 1, type: 'error', message: 'Error message'}]
         });
     });
 });

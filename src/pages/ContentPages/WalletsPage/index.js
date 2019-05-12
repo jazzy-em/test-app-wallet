@@ -8,13 +8,15 @@ import {getWallets} from '../../../selectors/wallet';
 import WalletsTable from '../../../components/WalletsTable';
 
 export const WalletsPage = ({wallets = [], loadWallets, history}) => {
-    useEffect(() => {loadWallets()}, []);
+    useEffect(() => {
+        loadWallets();
+    }, []);
 
     return (
         <ContentPageTemplate title="Your wallets">
             <WalletsTable wallets={wallets} history={history} />
         </ContentPageTemplate>
-    )
+    );
 };
 
 WalletsPage.propTypes = {
@@ -23,8 +25,11 @@ WalletsPage.propTypes = {
     history: PropTypes.object
 };
 
-export default connect(store => ({
-    wallets: getWallets(store)
-}), {
-    loadWallets: loadWalletsRequestAction
-})(WalletsPage);
+export default connect(
+    store => ({
+        wallets: getWallets(store)
+    }),
+    {
+        loadWallets: loadWalletsRequestAction
+    }
+)(WalletsPage);

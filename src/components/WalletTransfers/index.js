@@ -33,7 +33,7 @@ const findAddress = outputs => {
 };
 
 const WalletTransfers = ({transfers}) => {
-    const tableRows = (transfers || []).map((transfer) => {
+    const tableRows = (transfers || []).map(transfer => {
         const {type, date, outputs, state, baseValueString} = transfer;
         return {
             date: formatTimeForTransfers(date),
@@ -41,12 +41,10 @@ const WalletTransfers = ({transfers}) => {
             toFrom: findAddress(outputs),
             state,
             amount: formatTransferAmount(baseValueString)
-        }
+        };
     });
 
-    return (
-        <Table head={tableHead} rows={tableRows} />
-    )
+    return <Table head={tableHead} rows={tableRows} />;
 };
 
 WalletTransfers.propTypes = {

@@ -10,7 +10,7 @@ export const showNotificationAction = ({message, type, duration}) => ({
     payload: {id: getNotificationId(), message, type, duration}
 });
 
-export const hideNotificationAction = (id) => ({
+export const hideNotificationAction = id => ({
     type: 'UI_HIDE_NOTIFICATION',
     payload: id
 });

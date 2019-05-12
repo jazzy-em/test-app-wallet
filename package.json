@@ -1,7 +1,7 @@
 {
   "name": "wallet-test-app",
   "author": "Eugeny Gorshkov",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Test wallet app",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,7 @@
     "pretty": "prettier --write \"{{src,server},__{tests,mocks}__}/**/*.js\"",
     "test": "jest",
     "coverage": "jest --coverage",
-    "clear-jest": "jest --clearCache",
-    "webpack": "set NODE_ENV=production&& webpack"
+    "clear-jest": "jest --clearCache"
   },
   "betterScripts": {
     "build-client": {

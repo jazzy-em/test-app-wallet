@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -29,7 +29,7 @@ const initialState = {
 export class SendMoneyButton extends React.PureComponent {
     state = {...initialState};
 
-    componentDidUpdate = (prevProps) => {
+    componentDidUpdate = prevProps => {
         if (this.props.step !== prevProps.step && this.props.step === SEND_COINS_STEPS.success) {
             this.closeDialog();
         }
@@ -51,7 +51,7 @@ export class SendMoneyButton extends React.PureComponent {
     validate = () => {
         let isValid = true;
         const fieldNames = ['to', 'amount', 'passphrase', 'otp'];
-        fieldNames.forEach((name) => {
+        fieldNames.forEach(name => {
             if (!this.state[name]) {
                 this.setError(name);
                 isValid = false;
@@ -102,7 +102,7 @@ export class SendMoneyButton extends React.PureComponent {
     setError = name => {
         this.setState({
             [`${name}Error`]: true
-        })
+        });
     };
 
     render() {
@@ -110,11 +110,10 @@ export class SendMoneyButton extends React.PureComponent {
         const coin = (this.props.coin || '').toUpperCase();
         return (
             <>
-                <Button color="primary" onClick={this.openDialog}>Send money</Button>
-                <Dialog
-                    open={open}
-                    onClose={this.closeDialog}
-                >
+                <Button color="primary" onClick={this.openDialog}>
+                    Send money
+                </Button>
+                <Dialog open={open} onClose={this.closeDialog}>
                     <DialogTitle>Send money</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -175,7 +174,7 @@ export class SendMoneyButton extends React.PureComponent {
                     </DialogActions>
                 </Dialog>
             </>
-        )
+        );
     }
 
     static propTypes = {
@@ -186,8 +185,11 @@ export class SendMoneyButton extends React.PureComponent {
     };
 }
 
-export default connect(store => ({
-    step: getSendMoneyStep(store)
-}), {
-    sendCoins: sendCoinsRequestAction,
-})(SendMoneyButton);
+export default connect(
+    store => ({
+        step: getSendMoneyStep(store)
+    }),
+    {
+        sendCoins: sendCoinsRequestAction
+    }
+)(SendMoneyButton);

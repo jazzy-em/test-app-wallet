@@ -5,11 +5,11 @@ import React from 'react';
 import {render} from 'react-dom';
 import {createStore, compose, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {createBrowserHistory} from 'history';
 import {routerMiddleware} from 'connected-react-router';
-import {ConnectedRouter} from 'connected-react-router'
+import {ConnectedRouter} from 'connected-react-router';
 
 import App from './App';
 import {theme} from './theme';
@@ -43,7 +43,7 @@ render(
     <MuiThemeProvider theme={theme}>
         <Provider store={store}>
             <ConnectedRouter history={history}>
-                <App/>
+                <App />
             </ConnectedRouter>
         </Provider>
     </MuiThemeProvider>,

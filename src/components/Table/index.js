@@ -16,9 +16,7 @@ export const Table = ({head = [], rows = []}) => {
                 <TableHead>
                     <TableRow>
                         {head.map(column => (
-                            <TableCell key={column.id}>
-                                {column.label}
-                            </TableCell>
+                            <TableCell key={column.id}>{column.label}</TableCell>
                         ))}
                     </TableRow>
                 </TableHead>

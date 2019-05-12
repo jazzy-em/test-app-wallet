@@ -19,23 +19,28 @@ export class AuthPageTemplate extends React.PureComponent {
         const {children, errors = []} = this.props;
         return (
             <div className={styles.container}>
-                <AppLoadingIndicator onTop={true}/>
+                <AppLoadingIndicator onTop={true} />
                 <div className={styles.formWrapper}>
                     <div className={styles.form}>
-                        <Link to="/"><Logo /></Link>
+                        <Link to="/">
+                            <Logo />
+                        </Link>
                         {errors.length > 0 && (
                             <div className={styles.errors}>
-                                {errors.map((error, i) => <div key={i} className={styles.error}>{error}</div>)}
+                                {errors.map((error, i) => (
+                                    <div key={i} className={styles.error}>
+                                        {error}
+                                    </div>
+                                ))}
                             </div>
                         )}
                         {children}
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
-
 
 AuthPageTemplate.propTypes = {
     children: PropTypes.node,
@@ -43,8 +48,11 @@ AuthPageTemplate.propTypes = {
     setAuthErrors: PropTypes.func
 };
 
-export default connect(store => ({
-    errors: getAuthErrors(store),
-}), {
-    setAuthErrors: setAuthErrorsAction
-})(AuthPageTemplate);
+export default connect(
+    store => ({
+        errors: getAuthErrors(store)
+    }),
+    {
+        setAuthErrors: setAuthErrorsAction
+    }
+)(AuthPageTemplate);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import classnames from 'classnames';
@@ -20,10 +20,8 @@ AppLoadingIndicator.propTypes = {
     onTop: PropTypes.bool
 };
 
-export default connect(
-    store => {
-        return {
-            loading: getLoading(store)
-        };
-    }
-)(AppLoadingIndicator);
+export default connect(store => {
+    return {
+        loading: getLoading(store)
+    };
+})(AppLoadingIndicator);

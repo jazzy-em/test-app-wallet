@@ -7,8 +7,12 @@ module.exports = function({logger}) {
     const router = new express.Router();
     router.get('/wallets', function(req, res) {
         callBitgo({
-            action: bitgo => bitgo.coin('tbtc').wallets().list({})
-                .then(item => ({...item, wallets: item.wallets.map(walletToJson)})),
+            action: bitgo =>
+                bitgo
+                    .coin('tbtc')
+                    .wallets()
+                    .list({})
+                    .then(item => ({...item, wallets: item.wallets.map(walletToJson)})),
             logger,
             req,
             res
@@ -17,9 +21,12 @@ module.exports = function({logger}) {
 
     router.get('/wallet/:walletId', function(req, res) {
         callBitgo({
-            action: bitgo => bitgo.coin('tbtc').wallets()
-                .get({id: req.params.walletId})
-                .then(walletToJson),
+            action: bitgo =>
+                bitgo
+                    .coin('tbtc')
+                    .wallets()
+                    .get({id: req.params.walletId})
+                    .then(walletToJson),
             logger,
             req,
             res
@@ -29,7 +36,10 @@ module.exports = function({logger}) {
     router.post('/wallet/:walletId/sendCoins', function(req, res) {
         const {address, amount, walletPassphrase} = req.body;
         callBitgo({
-            action: bitgo => bitgo.coin('tbtc').wallets()
+            action: bitgo =>
+                bitgo
+                    .coin('tbtc')
+                    .wallets()
                     .get({id: req.params.walletId})
                     .then(wallet => wallet.send({address, amount, walletPassphrase})),
             logger,
@@ -40,9 +50,12 @@ module.exports = function({logger}) {
 
     router.get('/wallet/:walletId/transfers', function(req, res) {
         callBitgo({
-            action: bitgo => bitgo.coin('tbtc').wallets()
-                .get({id: req.params.walletId})
-                .then(wallet => wallet.transfers({limit: +req.query.limit})),
+            action: bitgo =>
+                bitgo
+                    .coin('tbtc')
+                    .wallets()
+                    .get({id: req.params.walletId})
+                    .then(wallet => wallet.transfers({limit: +req.query.limit})),
             logger,
             req,
             res

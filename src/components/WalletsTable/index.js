@@ -17,17 +17,15 @@ const tableHead = [
 ];
 
 export const WalletsTable = ({wallets = [], history}) => {
-    const tableRows = wallets.map((wallet) => ({
+    const tableRows = wallets.map(wallet => ({
         label: wallet.label,
         balance: formatWalletBalance(wallet),
         onClick: () => {
-            history.push(getWalletUrl(wallet.id))
+            history.push(getWalletUrl(wallet.id));
         }
     }));
 
-    return (
-        <Table head={tableHead} rows={tableRows} />
-    )
+    return <Table head={tableHead} rows={tableRows} />;
 };
 
 WalletsTable.propTypes = {

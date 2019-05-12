@@ -21,7 +21,7 @@ export const clearWalletAction = () => ({
     type: 'WALLET_CLEAR_WALLET'
 });
 
-export const sendCoinsRequestAction = (transactionInfo) => ({
+export const sendCoinsRequestAction = transactionInfo => ({
     type: 'WALLET_SEND_COINS_REQUEST',
     payload: transactionInfo
 });

@@ -9,7 +9,9 @@ import {
     loadWalletSaga,
     loadWalletsSaga,
     sendCoins,
-    sendCoinsSaga, silentLoadWallet, WALLET_POLLING_INTERVAL,
+    sendCoinsSaga,
+    silentLoadWallet,
+    WALLET_POLLING_INTERVAL,
     walletPolling,
     walletPollingSaga
 } from '../wallet';
@@ -18,6 +20,10 @@ import {SEND_COINS_STEPS} from '../../constants/wallet';
 import * as uiHelpers from '../../helpers/ui';
 
 describe('Wallet sagas tests', () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     describe('Reactions on events', () => {
         it('should take latest WALLET_LOAD_WALLETS_REQUEST action and run loadWallets saga', () => {
             const gen = loadWalletsSaga();
@@ -94,10 +100,7 @@ describe('Wallet sagas tests', () => {
 
         it('should set wallet and transfers if wallet and transfers requests are successful', () => {
             const gen = silentLoadWallet(walletId);
-            expect(gen.next().value).toEqual(all([
-                call(api.wallet, walletId),
-                call(api.transfers, walletId)
-            ]));
+            expect(gen.next().value).toEqual(all([call(api.wallet, walletId), call(api.transfers, walletId)]));
             const walletResponse = {
                 id: 'walletId'
             };
@@ -111,10 +114,7 @@ describe('Wallet sagas tests', () => {
 
         it('should call handleErrors if wallet or transfers requests are failed', () => {
             const gen = silentLoadWallet(walletId);
-            expect(gen.next().value).toEqual(all([
-                call(api.wallet, walletId),
-                call(api.transfers, walletId)
-            ]));
+            expect(gen.next().value).toEqual(all([call(api.wallet, walletId), call(api.transfers, walletId)]));
             expect(gen.throw(error).value).toEqual(call(handleErrors, error));
             expect(gen.next().done).toBe(true);
         });
@@ -142,7 +142,7 @@ describe('Wallet sagas tests', () => {
 
         it('should do nothing for WALLET_CLEAR_WALLET action', () => {
             const action = {
-                type: 'WALLET_CLEAR_WALLET',
+                type: 'WALLET_CLEAR_WALLET'
             };
             const gen = walletPolling(action);
             expect(gen.next().done).toBe(true);
@@ -166,12 +166,14 @@ describe('Wallet sagas tests', () => {
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
             expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.inProgress)));
             expect(gen.next().value).toEqual(call(api.unlock, action.payload.otp));
-            expect(gen.next().value).toEqual(call(api.sendCoins, {
-                walletId: action.payload.fromId,
-                address: action.payload.to,
-                amount: action.payload.amount,
-                walletPassphrase: action.payload.passphrase
-            }));
+            expect(gen.next().value).toEqual(
+                call(api.sendCoins, {
+                    walletId: action.payload.fromId,
+                    address: action.payload.to,
+                    amount: action.payload.amount,
+                    walletPassphrase: action.payload.passphrase
+                })
+            );
             expect(gen.next().value).toEqual(put(showNotificationAction({message: 'Money was successfully sent!'})));
             expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.success)));
             expect(gen.next().value).toEqual(put(setAppLoading(false)));

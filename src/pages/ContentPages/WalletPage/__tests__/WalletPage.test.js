@@ -30,7 +30,7 @@ describe('WalletPage tests', () => {
             const component = shallow(<WalletPage wallet={wallet} />);
             const template = component.find(ContentPageTemplate);
             expect(template.length).toBe(1);
-            expect(template.prop('title')).toEqual(<WalletHeader wallet={wallet}/>);
+            expect(template.prop('title')).toEqual(<WalletHeader wallet={wallet} />);
             expect(component.find(SendMoneyButton).length).toBe(1);
             expect(component.find(WalletTransfers).length).toBe(1);
         });
@@ -42,7 +42,7 @@ describe('WalletPage tests', () => {
                 }
             };
             const loadWallet = jest.fn();
-            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div/>);
+            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div />);
             mount(<WalletPage loadWallet={loadWallet} match={match} />);
             expect(loadWallet).toHaveBeenCalledWith(match.params.id);
         });
@@ -55,7 +55,7 @@ describe('WalletPage tests', () => {
             };
             const loadWallet = jest.fn();
             const clearWallet = jest.fn();
-            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div/>);
+            jest.spyOn(ContentPageTemplate, 'type').mockImplementation(() => <div />);
             const component = mount(<WalletPage loadWallet={loadWallet} clearWallet={clearWallet} match={match} />);
             expect(clearWallet).not.toHaveBeenCalled();
             component.unmount();
@@ -74,8 +74,8 @@ describe('WalletPage tests', () => {
                 }
             };
             jest.spyOn(ContentPageTemplate, 'type').mockImplementation(({children}) => <div>{children}</div>);
-            jest.spyOn(SendMoneyButton, 'type').mockImplementation(() => <div/>);
-            const component = mount(<WalletPage wallet={wallet} match={match} loadWallet={jest.fn()}/>);
+            jest.spyOn(SendMoneyButton, 'type').mockImplementation(() => <div />);
+            const component = mount(<WalletPage wallet={wallet} match={match} loadWallet={jest.fn()} />);
             expect(component.text().includes(wallet.receiveAddress.address)).toBe(true);
         });
 
@@ -120,18 +120,22 @@ describe('WalletPage tests', () => {
         });
 
         it('should connect wallet and transfers props', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedWalletPage match={match}/>
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedWalletPage match={match} />
+                </Provider>
+            );
             const page = component.find(WalletPage);
             expect(page.prop('wallet')).toBe(initial.wallet.wallet);
             expect(page.prop('transfers')).toBe(initial.wallet.transfers);
         });
 
         it('should connect loadWallet and clearWallet props', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedWalletPage match={match}/>
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedWalletPage match={match} />
+                </Provider>
+            );
             const page = component.find(WalletPage);
             expect(page.prop('loadWallet')()).toEqual(loadWalletRequestAction());
             expect(page.prop('clearWallet')()).toEqual(clearWalletAction());

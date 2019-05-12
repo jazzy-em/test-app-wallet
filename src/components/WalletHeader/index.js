@@ -12,19 +12,18 @@ import {getWalletsUrl} from '../../helpers/routes';
 
 const WalletHeader = ({wallet}) => (
     <div className={styles.header}>
-        <IconButton
-            component={Link}
-            to={getWalletsUrl()}
-        >
+        <IconButton component={Link} to={getWalletsUrl()}>
             <Icon>keyboard_backspace</Icon>
         </IconButton>
         {wallet ? (
             <>
                 {wallet.label}
-                <div className={styles.spacer}/>
+                <div className={styles.spacer} />
                 <Typography variant="h6">{formatWalletBalance(wallet)}</Typography>
             </>
-        ) : 'Loading...'}
+        ) : (
+            'Loading...'
+        )}
     </div>
 );
 

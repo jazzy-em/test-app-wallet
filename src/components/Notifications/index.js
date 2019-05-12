@@ -25,7 +25,10 @@ class Notifications extends React.PureComponent {
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.notifications[this.props.notifications.length - 1] !== prevProps.notifications[prevProps.notifications.length - 1]) {
+        if (
+            this.props.notifications[this.props.notifications.length - 1] !==
+            prevProps.notifications[prevProps.notifications.length - 1]
+        ) {
             if (this.state.open) {
                 // immediately begin dismissing current message
                 // to start showing new one
@@ -44,7 +47,7 @@ class Notifications extends React.PureComponent {
             }
             this.setState({
                 notification: notifications[notifications.length - 1],
-                open: true,
+                open: true
             });
         }
     };
@@ -77,31 +80,30 @@ class Notifications extends React.PureComponent {
             <Snackbar
                 anchorOrigin={{
                     vertical: 'bottom',
-                    horizontal: 'center',
+                    horizontal: 'center'
                 }}
                 open={open}
-                autoHideDuration={notification.duration || DEFAULT_AUTO_HIDE_DURATIONS[type] || DEFAULT_AUTO_HIDE_DURATIONS.default}
+                autoHideDuration={
+                    notification.duration || DEFAULT_AUTO_HIDE_DURATIONS[type] || DEFAULT_AUTO_HIDE_DURATIONS.default
+                }
                 onClose={this.handleClose}
                 onExited={this.handleExited}
                 ContentProps={{
                     className: styles[type] || styles.info
                 }}
-                message={<div className={styles.message}>
-                    <Icon className={styles.icon}>{icon}</Icon>
-                    {notification.message || DEFAULT_MESSAGES[type]}
-                </div>}
+                message={
+                    <div className={styles.message}>
+                        <Icon className={styles.icon}>{icon}</Icon>
+                        {notification.message || DEFAULT_MESSAGES[type]}
+                    </div>
+                }
                 action={[
-                    <IconButton
-                        key="close"
-                        aria-label="Close"
-                        color="inherit"
-                        onClick={this.handleClose}
-                    >
+                    <IconButton key="close" aria-label="Close" color="inherit" onClick={this.handleClose}>
                         <Icon>close</Icon>
                     </IconButton>
                 ]}
             />
-        )
+        );
     }
 
     static propTypes = {

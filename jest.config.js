@@ -9,7 +9,8 @@ module.exports = {
     "testEnvironment": "jest-environment-jsdom-global",
     "coverageReporters": [
         "lcov",
-        "cobertura"
+        "cobertura",
+        "text-summary"
     ],
     "roots": [
         "src",
@@ -17,29 +18,11 @@ module.exports = {
     ],
     "testRegex": "(/__tests__/.*\\.(test|spec))\\.jsx?$",
     "collectCoverageFrom": [
-        "server/**",
         "src/**/*.{js,jsx}",
         "!src/index.js",
         "!node_modules/**",
         "!dist/**",
         "!**/__tests__/**"
-    ],
-    "unmockedModulePathPatterns": [
-        "react",
-        "react-dom",
-        "react-redux",
-        "react-addons-test-utils",
-        "fbjs",
-        "enzyme",
-        "cheerio",
-        "htmlparser2",
-        "underscore",
-        "lodash",
-        "domhandler",
-        "object.assign",
-        "define-properties",
-        "function-bind",
-        "object-keys"
     ],
     "transform": {
         "^.+\\.js$": "babel-jest",

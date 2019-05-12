@@ -14,7 +14,7 @@ export const me = () => jsonRequest('/api/me');
 
 export const logout = () => jsonRequest('/api/logout');
 
-export const unlock = (otp) => {
+export const unlock = otp => {
     const body = {
         otp
     };

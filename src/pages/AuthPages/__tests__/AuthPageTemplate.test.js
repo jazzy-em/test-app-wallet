@@ -55,22 +55,26 @@ describe('AuthPageTemplate tests', () => {
                 return state;
             };
             store = createStore(reducer);
-            jest.spyOn(reactRouterDom, 'Link').mockImplementation(({to}) => <a href={to}/>);
+            jest.spyOn(reactRouterDom, 'Link').mockImplementation(({to}) => <a href={to} />);
             jest.spyOn(AppLoadingIndicator, 'type').mockImplementation(() => <div />);
         });
 
         it('should connect errors prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedAuthPageTemplate />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedAuthPageTemplate />
+                </Provider>
+            );
             const template = component.find(AuthPageTemplate);
             expect(template.prop('errors')).toBe(initial.auth.authErrors);
         });
 
         it('should connect setAuthErrors prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedAuthPageTemplate />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedAuthPageTemplate />
+                </Provider>
+            );
             const template = component.find(AuthPageTemplate);
             expect(template.prop('setAuthErrors')([])).toEqual(setAuthErrorsAction([]));
         });

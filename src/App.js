@@ -1,5 +1,5 @@
 import React from 'react';
-import {hot} from 'react-hot-loader'
+import {hot} from 'react-hot-loader';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Notifications from './components/Notifications';
@@ -19,11 +19,11 @@ const App = () => {
                 <Route exact path={`${walletUrl}/:id`} component={WalletPage} />
                 <Route exact path={loginUrl} component={LoginPage} />
                 <Route exact path={logoutUrl} component={LogoutPage} />
-                <Redirect to={'/'}/>
+                <Redirect to={'/'} />
             </Switch>
             <Notifications />
         </>
     );
 };
 
-export default hot(module)(App)
+export default hot(module)(App);

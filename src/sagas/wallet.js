@@ -83,10 +83,5 @@ export function* sendCoinsSaga() {
     yield takeEvery('WALLET_SEND_COINS_REQUEST', sendCoins);
 }
 
-const sagas = [
-    fork(loadWalletsSaga),
-    fork(loadWalletSaga),
-    fork(sendCoinsSaga),
-    fork(walletPollingSaga)
-];
+const sagas = [fork(loadWalletsSaga), fork(loadWalletSaga), fork(sendCoinsSaga), fork(walletPollingSaga)];
 export default sagas;

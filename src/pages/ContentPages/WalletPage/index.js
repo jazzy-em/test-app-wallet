@@ -20,20 +20,20 @@ export const WalletPage = ({wallet, transfers, match, loadWallet, clearWallet}) 
     }, []);
 
     return (
-        <ContentPageTemplate title={<WalletHeader wallet={wallet}/>}>
+        <ContentPageTemplate title={<WalletHeader wallet={wallet} />}>
             {wallet && (
                 <>
                     <Typography variant="caption">Receive address:</Typography>
                     <Typography>{path(['receiveAddress', 'address'], wallet)}</Typography>
                     <div className={styles.sendMoney}>
-                        <SendMoneyButton walletId={wallet.id} coin={wallet.coin}/>
+                        <SendMoneyButton walletId={wallet.id} coin={wallet.coin} />
                     </div>
                     <Typography variant="h6">Last transactions:</Typography>
-                    <WalletTransfers transfers={transfers}/>
+                    <WalletTransfers transfers={transfers} />
                 </>
             )}
         </ContentPageTemplate>
-    )
+    );
 };
 
 WalletPage.propTypes = {
@@ -44,10 +44,13 @@ WalletPage.propTypes = {
     clearWallet: PropTypes.func
 };
 
-export default connect(store => ({
-    wallet: getWallet(store),
-    transfers: getTransfers(store)
-}), {
-    loadWallet: loadWalletRequestAction,
-    clearWallet: clearWalletAction
-})(WalletPage);
+export default connect(
+    store => ({
+        wallet: getWallet(store),
+        transfers: getTransfers(store)
+    }),
+    {
+        loadWallet: loadWalletRequestAction,
+        clearWallet: clearWalletAction
+    }
+)(WalletPage);

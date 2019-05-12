@@ -11,7 +11,8 @@ const reducer = {
     wallet
 };
 
-export default (history) => combineReducers({
-    router: connectRouter(history),
-    ...reducer
-});
+export default history =>
+    combineReducers({
+        router: connectRouter(history),
+        ...reducer
+    });

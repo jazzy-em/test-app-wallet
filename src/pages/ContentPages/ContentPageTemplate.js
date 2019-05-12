@@ -27,7 +27,7 @@ export const ContentPageTemplate = ({title, loading, children}) => {
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 ContentPageTemplate.propTypes = {
@@ -36,10 +36,8 @@ ContentPageTemplate.propTypes = {
     loading: PropTypes.bool
 };
 
-export default connect(
-    store => {
-        return {
-            loading: getLoading(store)
-        };
-    }
-)(ContentPageTemplate)
+export default connect(store => {
+    return {
+        loading: getLoading(store)
+    };
+})(ContentPageTemplate);

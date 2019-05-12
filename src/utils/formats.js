@@ -12,7 +12,7 @@ export const btcToSatoshi = btc => {
     return safeBtc.multipliedBy(1e8);
 };
 
-export const formatTransferAmount = (baseValueString) => {
+export const formatTransferAmount = baseValueString => {
     const btc = satoshiToBtc(baseValueString);
     return btc > 0 ? `+${btc}` : `${btc}`;
 };

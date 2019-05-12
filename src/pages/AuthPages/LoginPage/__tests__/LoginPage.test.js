@@ -123,9 +123,11 @@ describe('Login page tests', () => {
         });
 
         it('should connect loginRequest prop', () => {
-            const component = mount(<Provider store={store}>
-                <ConnectedLoginPage />
-            </Provider>);
+            const component = mount(
+                <Provider store={store}>
+                    <ConnectedLoginPage />
+                </Provider>
+            );
             const page = component.find(LoginPage);
             expect(page.prop('loginRequest')({})).toEqual(loginRequestAction({}));
         });

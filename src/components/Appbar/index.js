@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
@@ -19,27 +19,27 @@ const Appbar = ({title = 'Wallet app', userInfo}) => {
     return (
         <div className={styles.container}>
             <AppBar className={styles.appBar} position="static" color="default">
-                <Toolbar className={styles.toolBar} >
+                <Toolbar className={styles.toolBar}>
                     <div className={styles.widthWrapper}>
                         <Logo />
-                        <Typography className={styles.title} variant="h5">{title}</Typography>
+                        <Typography className={styles.title} variant="h5">
+                            {title}
+                        </Typography>
                         {isLogged && <Typography className={styles.username}>{userInfo.username}</Typography>}
                         {isLogged ? (
-                                <Button component={Link} to={getLogoutUrl()}>
-                                    Logout
-                                </Button>
-                            ) : (
-                                <Button component={Link} to={getLoginUrl()}>
-                                    Login
-                                </Button>
-                            )
-                        }
-
+                            <Button component={Link} to={getLogoutUrl()}>
+                                Logout
+                            </Button>
+                        ) : (
+                            <Button component={Link} to={getLoginUrl()}>
+                                Login
+                            </Button>
+                        )}
                     </div>
                 </Toolbar>
             </AppBar>
         </div>
-    )
+    );
 };
 
 Appbar.propTypes = {
@@ -47,10 +47,8 @@ Appbar.propTypes = {
     userInfo: PropTypes.object
 };
 
-export default connect(
-    store => {
-        return {
-            userInfo: getUserInfo(store)
-        };
-    }
-)(Appbar);
+export default connect(store => {
+    return {
+        userInfo: getUserInfo(store)
+    };
+})(Appbar);

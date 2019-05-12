@@ -64,7 +64,9 @@ describe('Auth sagas tests', () => {
             const gen = login(action);
             expect(localStorage.getItem(accessTokenKey)).toBeFalsy();
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
-            expect(gen.next().value).toEqual(call(api.login, action.payload.login, action.payload.password, action.payload.otp));
+            expect(gen.next().value).toEqual(
+                call(api.login, action.payload.login, action.payload.password, action.payload.otp)
+            );
             const response = {
                 user: {email: 'user@email.com'},
                 access_token: 'fdGFWTfashghgfd'
@@ -80,7 +82,9 @@ describe('Auth sagas tests', () => {
             const gen = login(action);
             expect(localStorage.getItem(accessTokenKey)).toBeFalsy();
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
-            expect(gen.next().value).toEqual(call(api.login, action.payload.login, action.payload.password, action.payload.otp));
+            expect(gen.next().value).toEqual(
+                call(api.login, action.payload.login, action.payload.password, action.payload.otp)
+            );
             const response = {
                 user: {email: 'user@email.com'}
             };
@@ -94,7 +98,9 @@ describe('Auth sagas tests', () => {
             const gen = login(action);
             expect(localStorage.getItem(accessTokenKey)).toBeFalsy();
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
-            expect(gen.next().value).toEqual(call(api.login, action.payload.login, action.payload.password, action.payload.otp));
+            expect(gen.next().value).toEqual(
+                call(api.login, action.payload.login, action.payload.password, action.payload.otp)
+            );
             expect(gen.throw(error).value).toEqual(call(handleAuthErrors, error));
             expect(localStorage.getItem(accessTokenKey)).toBeFalsy();
             expect(gen.next().value).toEqual(put(setAppLoading(false)));
