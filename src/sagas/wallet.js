@@ -9,7 +9,7 @@ import {
     setWalletsAction,
     startWalletPollingAction
 } from '../actions/wallet';
-import {SEND_COINS_STEPS} from '../constants/wallet';
+import {SEND_COINS_STATES} from '../constants/wallet';
 import {handleErrors} from './common';
 import {WALLET} from '../constants/actions';
 
@@ -62,17 +62,17 @@ export function* walletPolling(action) {
 export function* sendCoins(action) {
     const {fromId, to, amount, passphrase, otp} = action.payload;
     yield put(setAppLoading(true));
-    yield put(setSendMoneyStepAction(SEND_COINS_STEPS.inProgress));
+    yield put(setSendMoneyStepAction(SEND_COINS_STATES.inProgress));
     try {
         yield call(api.unlock, otp);
         yield call(api.sendCoins, {walletId: fromId, address: to, amount, walletPassphrase: passphrase});
         yield put(showNotificationAction({message: 'Money was successfully sent!'}));
-        yield put(setSendMoneyStepAction(SEND_COINS_STEPS.success));
+        yield put(setSendMoneyStepAction(SEND_COINS_STATES.success));
     } catch (e) {
         yield call(handleErrors, e);
     }
     yield put(setAppLoading(false));
-    yield put(setSendMoneyStepAction(SEND_COINS_STEPS.initial));
+    yield put(setSendMoneyStepAction(SEND_COINS_STATES.initial));
 }
 
 export function* loadWalletsSaga() {

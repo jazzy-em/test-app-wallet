@@ -59,7 +59,6 @@
     "immer": "^3.1.1",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
-    "promisify-node": "^0.5.0",
     "prop-types": "latest",
     "query-string": "^5.1.1",
     "ramda": "^0.26.1",
@@ -69,8 +68,7 @@
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
-    "request-promise": "latest",
-    "whatwg-url": "latest",
+    "whatwg-fetch": "latest",
     "winston": "3.1.0"
   },
   "devDependencies": {

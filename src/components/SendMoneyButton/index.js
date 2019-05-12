@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {sendCoinsRequestAction} from '../../actions/wallet';
 import {btcToSatoshi} from '../../utils/formats';
 import {getSendMoneyStep} from '../../selectors/wallet';
-import {SEND_COINS_STEPS} from '../../constants/wallet';
+import {SEND_COINS_STATES} from '../../constants/wallet';
 
 const initialState = {
     open: false,
@@ -30,7 +30,7 @@ export class SendMoneyButton extends React.PureComponent {
     state = {...initialState};
 
     componentDidUpdate = prevProps => {
-        if (this.props.step !== prevProps.step && this.props.step === SEND_COINS_STEPS.success) {
+        if (this.props.step !== prevProps.step && this.props.step === SEND_COINS_STATES.success) {
             this.closeDialog();
         }
     };
@@ -74,7 +74,7 @@ export class SendMoneyButton extends React.PureComponent {
     };
 
     isSendingInProgress = () => {
-        return this.props.step === SEND_COINS_STEPS.inProgress;
+        return this.props.step === SEND_COINS_STATES.inProgress;
     };
 
     closeDialog = () => {
@@ -179,7 +179,7 @@ export class SendMoneyButton extends React.PureComponent {
 
     static propTypes = {
         walletId: PropTypes.string.isRequired,
-        step: PropTypes.oneOf(Object.values(SEND_COINS_STEPS)),
+        step: PropTypes.oneOf(Object.values(SEND_COINS_STATES)),
         coin: PropTypes.string.isRequired,
         sendCoins: PropTypes.func.isRequired
     };

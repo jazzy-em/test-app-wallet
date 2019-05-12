@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import {AUTH} from '../constants/actions';
 
 const initialState = {
@@ -5,14 +7,16 @@ const initialState = {
     authErrors: []
 };
 
-const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case AUTH.SET_USER_INFO:
-            return {...state, userInfo: action.payload};
-        case AUTH.SET_AUTH_ERRORS:
-            return {...state, authErrors: action.payload};
-    }
-    return state;
-};
+const authReducer = (state = initialState, action) =>
+    produce(state, draft => {
+        switch (action.type) {
+            case AUTH.SET_USER_INFO:
+                draft.userInfo = action.payload;
+                break;
+            case AUTH.SET_AUTH_ERRORS:
+                draft.authErrors = action.payload;
+                break;
+        }
+    });
 
 export default authReducer;

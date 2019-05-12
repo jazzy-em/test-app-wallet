@@ -22,7 +22,7 @@ import {
     setWalletsAction,
     startWalletPollingAction
 } from '../../actions/wallet';
-import {SEND_COINS_STEPS} from '../../constants/wallet';
+import {SEND_COINS_STATES} from '../../constants/wallet';
 import * as uiHelpers from '../../helpers/ui';
 
 describe('Wallet sagas tests', () => {
@@ -171,7 +171,7 @@ describe('Wallet sagas tests', () => {
             jest.spyOn(uiHelpers, 'getNotificationId').mockReturnValue(123);
             const gen = sendCoins(action);
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
-            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.inProgress)));
+            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STATES.inProgress)));
             expect(gen.next().value).toEqual(call(api.unlock, action.payload.otp));
             expect(gen.next().value).toEqual(
                 call(api.sendCoins, {
@@ -182,20 +182,20 @@ describe('Wallet sagas tests', () => {
                 })
             );
             expect(gen.next().value).toEqual(put(showNotificationAction({message: 'Money was successfully sent!'})));
-            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.success)));
+            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STATES.success)));
             expect(gen.next().value).toEqual(put(setAppLoading(false)));
-            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.initial)));
+            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STATES.initial)));
             expect(gen.next().done).toBe(true);
         });
 
         it('should call handleErrors if one of requests is failed', () => {
             const gen = sendCoins(action);
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
-            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.inProgress)));
+            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STATES.inProgress)));
             expect(gen.next().value).toEqual(call(api.unlock, action.payload.otp));
             expect(gen.throw(error).value).toEqual(call(handleErrors, error));
             expect(gen.next().value).toEqual(put(setAppLoading(false)));
-            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STEPS.initial)));
+            expect(gen.next().value).toEqual(put(setSendMoneyStepAction(SEND_COINS_STATES.initial)));
             expect(gen.next().done).toBe(true);
         });
     });

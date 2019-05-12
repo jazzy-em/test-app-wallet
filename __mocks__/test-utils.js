@@ -1,21 +1,3 @@
-export const delayPromise = (delay = 0) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, delay);
-    });
-};
-
-export const asyncCheck = (test, done, delay = 0) =>
-    delayPromise(delay)
-        .then(() => {
-            test();
-            done();
-        })
-        .catch(e => {
-            done.fail(e);
-        });
-
 export const storageMock = () => {
     let storage = {};
     const rebuild = () => Object.assign(api, storage, methods, {length: Object.keys(storage).length});
