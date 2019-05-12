@@ -51,7 +51,7 @@ const handleErrors = response => {
 };
 
 const parseErrors = error => {
-    const {info, response} = error;
+    const {info, response = {}} = error;
     switch (response.status) {
         case 401:
             if (info.needsOTP !== true) {

@@ -92,12 +92,12 @@ module.exports = {
     devServer: {
         publicPath: publicPath,
         hot: true,
-        port: 8083,
+        port: config.has('webpackPort') && config.get('webpackPort') || 8083,
         proxy: {
             '**': {
                 limit: '50mb',
                 target: 'http://localhost:' + config.get('port'),
-                bypass: function (req, res, opt) {
+                bypass: function (req) {
                     // don't proxy HTTP requests that originate from a browser
                     if (req.headers.accept.indexOf('html') !== -1 && req.url.indexOf('/callback') === -1) {
                         return publicPath;

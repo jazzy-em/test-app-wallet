@@ -1,5 +1,6 @@
 {
     "port": 8093,
+    "webpackPort": 8083,
     "urlPrefix": "",
     "staticDir": "dist"
 }

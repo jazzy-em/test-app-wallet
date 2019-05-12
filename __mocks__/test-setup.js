@@ -11,6 +11,7 @@ jsdom.reconfigure({
 });
 global.localStorage = global.localStorage || storageMock();
 global.requestAnimationFrame = global.requestAnimationFrame || (() => {});
+global.fetch = global.fetch || (() => Promise.resolve());
 
 const meta = document.createElement('meta');
 meta.setAttribute('data-name', 'urlPrefix');
