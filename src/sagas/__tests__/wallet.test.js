@@ -15,7 +15,13 @@ import {
     walletPolling,
     walletPollingSaga
 } from '../wallet';
-import {setSendMoneyStepAction, setTransfersAction, setWalletAction, setWalletsAction} from '../../actions/wallet';
+import {
+    setSendMoneyStepAction,
+    setTransfersAction,
+    setWalletAction,
+    setWalletsAction,
+    startWalletPollingAction
+} from '../../actions/wallet';
 import {SEND_COINS_STEPS} from '../../constants/wallet';
 import * as uiHelpers from '../../helpers/ui';
 
@@ -37,9 +43,11 @@ describe('Wallet sagas tests', () => {
             expect(gen.next().done).toBe(true);
         });
 
-        it('should take latest ["WALLET_SET_WALLET", "WALLET_CLEAR_WALLET"] actions and run walletPolling saga', () => {
+        it('should take latest ["WALLET_START_POLLING", "WALLET_CLEAR_WALLET"] actions and run walletPolling saga', () => {
             const gen = walletPollingSaga();
-            expect(gen.next().value).toEqual(takeLatest(['WALLET_SET_WALLET', 'WALLET_CLEAR_WALLET'], walletPolling));
+            expect(gen.next().value).toEqual(
+                takeLatest(['WALLET_START_POLLING', 'WALLET_CLEAR_WALLET'], walletPolling)
+            );
             expect(gen.next().done).toBe(true);
         });
 
@@ -91,6 +99,7 @@ describe('Wallet sagas tests', () => {
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
             expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
             expect(gen.next().value).toEqual(put(setAppLoading(false)));
+            expect(gen.next().value).toEqual(put(startWalletPollingAction(action.payload)));
             expect(gen.next().done).toBe(true);
         });
     });
@@ -123,20 +132,18 @@ describe('Wallet sagas tests', () => {
     describe('WalletPolling saga behavior', () => {
         it('should periodically call silentLoadWallet (infinity loop) for WALLET_SET_WALLET action', () => {
             const action = {
-                type: 'WALLET_SET_WALLET',
-                payload: {
-                    id: 'walletId'
-                }
+                type: 'WALLET_START_POLLING',
+                payload: 'walletId'
             };
             const gen = walletPolling(action);
             expect(gen.next().value).toEqual(delay(WALLET_POLLING_INTERVAL));
-            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload.id));
+            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
             expect(gen.next().value).toEqual(delay(WALLET_POLLING_INTERVAL));
-            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload.id));
+            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
             expect(gen.next().value).toEqual(delay(WALLET_POLLING_INTERVAL));
-            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload.id));
+            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
             expect(gen.next().value).toEqual(delay(WALLET_POLLING_INTERVAL));
-            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload.id));
+            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
             expect(gen.next().done).toBe(false);
         });
 

@@ -1,4 +1,5 @@
 import {SEND_COINS_STEPS} from '../constants/wallet';
+import {WALLET} from '../constants/actions';
 
 const initialState = {
     wallets: [],
@@ -9,15 +10,15 @@ const initialState = {
 
 const walletReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'WALLET_SET_WALLETS':
+        case WALLET.SET_WALLETS:
             return {...state, wallets: action.payload};
-        case 'WALLET_SET_WALLET':
+        case WALLET.SET_WALLET:
             return {...state, wallet: action.payload};
-        case 'WALLET_CLEAR_WALLET':
+        case WALLET.CLEAR_WALLET:
             return {...state, wallet: null};
-        case 'WALLET_SET_TRANSFERS':
+        case WALLET.SET_TRANSFERS:
             return {...state, transfers: action.payload};
-        case 'WALLET_SET_SEND_MONEY_STEP':
+        case WALLET.SET_SEND_MONEY_STEP:
             return {...state, sendMoneyStep: action.payload};
     }
     return state;

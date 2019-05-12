@@ -7,6 +7,7 @@ import {setAppLoading} from '../actions/ui';
 import {setAuthErrorsAction, setUserInfoAction} from '../actions/auth';
 import {setAccessToken} from '../helpers/auth';
 import {handleErrors} from './common';
+import {AUTH} from '../constants/actions';
 
 export function* onSuccessfulLogin(redirectTo) {
     yield put(setAuthErrorsAction([]));
@@ -63,15 +64,15 @@ export function* fetchUserInfo() {
 }
 
 export function* loginSaga() {
-    yield takeLatest('AUTH_LOGIN_REQUEST', login);
+    yield takeLatest(AUTH.LOGIN_REQUEST, login);
 }
 
 export function* logoutSaga() {
-    yield takeLatest('AUTH_LOGOUT_REQUEST', logout);
+    yield takeLatest(AUTH.LOGOUT_REQUEST, logout);
 }
 
 export function* fetchUserInfoSaga() {
-    yield takeLatest('AUTH_FETCH_USER_INFO_REQUEST', fetchUserInfo);
+    yield takeLatest(AUTH.FETCH_USER_INFO_REQUEST, fetchUserInfo);
 }
 
 const sagas = [fork(loginSaga), fork(logoutSaga), fork(fetchUserInfoSaga)];

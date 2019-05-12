@@ -27,20 +27,20 @@ const tableHead = [
     }
 ];
 
-const findAddress = outputs => {
-    const chain0 = outputs.find(output => output.chain === 0) || {};
-    return chain0.address;
+const findAddress = (outputs = []) => {
+    const chain0 = outputs.find(output => output.isSegwit === false && output.redeemScript) || {};
+    return chain0.address || '';
 };
 
 const WalletTransfers = ({transfers}) => {
     const tableRows = (transfers || []).map(transfer => {
-        const {type, date, outputs, state, baseValueString} = transfer;
+        const {type, date, outputs, state, valueString} = transfer;
         return {
             date: formatTimeForTransfers(date),
             type,
             toFrom: findAddress(outputs),
             state,
-            amount: formatTransferAmount(baseValueString)
+            amount: formatTransferAmount(valueString)
         };
     });
 

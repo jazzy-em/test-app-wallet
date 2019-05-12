@@ -1,37 +1,44 @@
+import {WALLET} from '../constants/actions';
+
 export const loadWalletsRequestAction = () => ({
-    type: 'WALLET_LOAD_WALLETS_REQUEST'
+    type: WALLET.LOAD_WALLETS_REQUEST
 });
 
 export const setWalletsAction = wallets => ({
-    type: 'WALLET_SET_WALLETS',
+    type: WALLET.SET_WALLETS,
     payload: wallets
 });
 
 export const loadWalletRequestAction = id => ({
-    type: 'WALLET_LOAD_WALLET_REQUEST',
+    type: WALLET.LOAD_WALLET_REQUEST,
+    payload: id
+});
+
+export const startWalletPollingAction = id => ({
+    type: WALLET.START_POLLING,
     payload: id
 });
 
 export const setWalletAction = wallet => ({
-    type: 'WALLET_SET_WALLET',
+    type: WALLET.SET_WALLET,
     payload: wallet
 });
 
 export const clearWalletAction = () => ({
-    type: 'WALLET_CLEAR_WALLET'
+    type: WALLET.CLEAR_WALLET
 });
 
 export const sendCoinsRequestAction = transactionInfo => ({
-    type: 'WALLET_SEND_COINS_REQUEST',
+    type: WALLET.SEND_COINS_REQUEST,
     payload: transactionInfo
 });
 
 export const setSendMoneyStepAction = step => ({
-    type: 'WALLET_SET_SEND_MONEY_STEP',
+    type: WALLET.SET_SEND_MONEY_STEP,
     payload: step
 });
 
 export const setTransfersAction = transfers => ({
-    type: 'WALLET_SET_TRANSFERS',
+    type: WALLET.SET_TRANSFERS,
     payload: transfers
 });

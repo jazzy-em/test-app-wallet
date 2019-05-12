@@ -2,9 +2,16 @@ import {fork, takeLatest, takeEvery, put, call, all, delay} from 'redux-saga/eff
 
 import * as api from '../api';
 import {setAppLoading, showNotificationAction} from '../actions/ui';
-import {setSendMoneyStepAction, setTransfersAction, setWalletAction, setWalletsAction} from '../actions/wallet';
+import {
+    setSendMoneyStepAction,
+    setTransfersAction,
+    setWalletAction,
+    setWalletsAction,
+    startWalletPollingAction
+} from '../actions/wallet';
 import {SEND_COINS_STEPS} from '../constants/wallet';
 import {handleErrors} from './common';
+import {WALLET} from '../constants/actions';
 
 export const WALLET_POLLING_INTERVAL = 10000;
 
@@ -38,16 +45,17 @@ export function* loadWallet(action) {
     yield put(setAppLoading(true));
     yield call(silentLoadWallet, action.payload);
     yield put(setAppLoading(false));
+    yield put(startWalletPollingAction(action.payload));
 }
 
 export function* walletPolling(action) {
-    if (action.type === 'WALLET_CLEAR_WALLET') {
+    if (action.type === WALLET.CLEAR_WALLET) {
         // it will stop polling
         return;
     }
     while (true) {
         yield delay(WALLET_POLLING_INTERVAL);
-        yield call(silentLoadWallet, action.payload.id);
+        yield call(silentLoadWallet, action.payload);
     }
 }
 
@@ -68,19 +76,19 @@ export function* sendCoins(action) {
 }
 
 export function* loadWalletsSaga() {
-    yield takeLatest('WALLET_LOAD_WALLETS_REQUEST', loadWallets);
+    yield takeLatest(WALLET.LOAD_WALLETS_REQUEST, loadWallets);
 }
 
 export function* loadWalletSaga() {
-    yield takeLatest('WALLET_LOAD_WALLET_REQUEST', loadWallet);
+    yield takeLatest(WALLET.LOAD_WALLET_REQUEST, loadWallet);
 }
 
 export function* walletPollingSaga() {
-    yield takeLatest(['WALLET_SET_WALLET', 'WALLET_CLEAR_WALLET'], walletPolling);
+    yield takeLatest([WALLET.START_POLLING, WALLET.CLEAR_WALLET], walletPolling);
 }
 
 export function* sendCoinsSaga() {
-    yield takeEvery('WALLET_SEND_COINS_REQUEST', sendCoins);
+    yield takeEvery(WALLET.SEND_COINS_REQUEST, sendCoins);
 }
 
 const sagas = [fork(loadWalletsSaga), fork(loadWalletSaga), fork(sendCoinsSaga), fork(walletPollingSaga)];
