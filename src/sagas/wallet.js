@@ -28,6 +28,7 @@ export function* loadWallets() {
 }
 
 export function* silentLoadWallet(walletId) {
+    let success = false;
     try {
         const [walletResponse, transfersResponse] = yield all([
             call(api.wallet, walletId),
@@ -36,16 +37,20 @@ export function* silentLoadWallet(walletId) {
         yield put(setWalletAction(walletResponse));
         const transfers = transfersResponse && transfersResponse.transfers;
         yield put(setTransfersAction(transfers));
+        success = true;
     } catch (e) {
         yield call(handleErrors, e);
     }
+    return success;
 }
 
 export function* loadWallet(action) {
     yield put(setAppLoading(true));
-    yield call(silentLoadWallet, action.payload);
+    const success = yield call(silentLoadWallet, action.payload);
     yield put(setAppLoading(false));
-    yield put(startWalletPollingAction(action.payload));
+    if (success) {
+        yield put(startWalletPollingAction(action.payload));
+    }
 }
 
 export function* walletPolling(action) {

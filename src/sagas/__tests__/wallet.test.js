@@ -94,12 +94,22 @@ describe('Wallet sagas tests', () => {
             payload: 'walletId'
         };
 
-        it('should call silentLoadWallet and set loading', () => {
+        it('should call silentLoadWallet and start wallet polling if silentLoadWallet was successful', () => {
             const gen = loadWallet(action);
             expect(gen.next().value).toEqual(put(setAppLoading(true)));
             expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
-            expect(gen.next().value).toEqual(put(setAppLoading(false)));
+            const success = true;
+            expect(gen.next(success).value).toEqual(put(setAppLoading(false)));
             expect(gen.next().value).toEqual(put(startWalletPollingAction(action.payload)));
+            expect(gen.next().done).toBe(true);
+        });
+
+        it('should call silentLoadWallet and not start wallet polling if silentLoadWallet was not successful', () => {
+            const gen = loadWallet(action);
+            expect(gen.next().value).toEqual(put(setAppLoading(true)));
+            expect(gen.next().value).toEqual(call(silentLoadWallet, action.payload));
+            const success = false;
+            expect(gen.next(success).value).toEqual(put(setAppLoading(false)));
             expect(gen.next().done).toBe(true);
         });
     });
@@ -118,14 +128,20 @@ describe('Wallet sagas tests', () => {
             };
             expect(gen.next([walletResponse, transfersResponse]).value).toEqual(put(setWalletAction(walletResponse)));
             expect(gen.next().value).toEqual(put(setTransfersAction(transfersResponse.transfers)));
-            expect(gen.next().done).toBe(true);
+            expect(gen.next()).toEqual({
+                done: true,
+                value: true
+            });
         });
 
         it('should call handleErrors if wallet or transfers requests are failed', () => {
             const gen = silentLoadWallet(walletId);
             expect(gen.next().value).toEqual(all([call(api.wallet, walletId), call(api.transfers, walletId)]));
             expect(gen.throw(error).value).toEqual(call(handleErrors, error));
-            expect(gen.next().done).toBe(true);
+            expect(gen.next()).toEqual({
+                done: true,
+                value: false
+            });
         });
     });
 
