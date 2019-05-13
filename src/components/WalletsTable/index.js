@@ -18,6 +18,7 @@ const tableHead = [
 
 export const WalletsTable = ({wallets = [], history}) => {
     const tableRows = wallets.map(wallet => ({
+        id: wallet.id,
         label: wallet.label,
         balance: formatWalletBalance(wallet),
         onClick: () => {

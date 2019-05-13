@@ -110,7 +110,7 @@ export class SendMoneyButton extends React.PureComponent {
         const coin = (this.props.coin || '').toUpperCase();
         return (
             <>
-                <Button color="primary" onClick={this.openDialog}>
+                <Button variant="contained" color="primary" onClick={this.openDialog}>
                     Send money
                 </Button>
                 <Dialog open={open} onClose={this.closeDialog}>

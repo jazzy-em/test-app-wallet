@@ -34,8 +34,9 @@ const findAddress = (outputs = []) => {
 
 const WalletTransfers = ({transfers}) => {
     const tableRows = (transfers || []).map(transfer => {
-        const {type, date, outputs, state, valueString} = transfer;
+        const {id, type, date, outputs, state, valueString} = transfer;
         return {
+            id,
             date: formatTimeForTransfers(date),
             type,
             toFrom: findAddress(outputs),

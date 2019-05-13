@@ -1,8 +1,8 @@
-#test-app-wallet
+# test-app-wallet
 
 [![Codeship Status for jazzy-em/test-app-wallet](https://app.codeship.com/projects/ad699730-5727-0137-3bbf-62c8855d79ff/status?branch=master)](https://app.codeship.com/projects/341640)
 
-##What is it
+## What is it
 JS-wallet application based on BitGo test API.
 Backend part is node Express app, front-end part is React+Redux app.
 

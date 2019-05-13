@@ -17,7 +17,7 @@ describe('Wallet reducer tests', () => {
             wallets: []
         };
 
-        const payload = [{id: 1, coin: 'B', balance: 0.002}];
+        const payload = [{id: 1, coin: 'B', balance: 200000}];
 
         expect(walletReducer(state, {type: 'WALLET_SET_WALLETS', payload})).toEqual({
             wallets: payload
@@ -29,7 +29,7 @@ describe('Wallet reducer tests', () => {
             wallet: null
         };
 
-        const payload = {id: 1, coin: 'B', balance: 0.002};
+        const payload = {id: 1, coin: 'B', balance: 200000};
 
         expect(walletReducer(state, {type: 'WALLET_SET_WALLET', payload})).toEqual({
             wallet: payload
@@ -38,7 +38,7 @@ describe('Wallet reducer tests', () => {
 
     it('should clear wallet', () => {
         const state = {
-            wallet: {id: 1, coin: 'B', balance: 0.002}
+            wallet: {id: 1, coin: 'B', balance: 200000}
         };
 
         expect(walletReducer(state, {type: 'WALLET_CLEAR_WALLET'})).toEqual({
