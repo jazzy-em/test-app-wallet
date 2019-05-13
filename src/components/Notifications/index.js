@@ -18,7 +18,7 @@ const DEFAULT_MESSAGES = {
     error: 'Something went wrong...'
 };
 
-class Notifications extends React.PureComponent {
+export class Notifications extends React.PureComponent {
     state = {
         open: false,
         notification: {}

@@ -6,7 +6,17 @@
 JS-wallet application based on BitGo test API.
 Backend part is node Express app, front-end part is React+Redux app.
 
-To use it you should have/create account on [test.bitgo.com](http://test.bitgo.com/)
+To use it you should have/create account on [test.bitgo.com](http://test.bitgo.com/).
+You can get some TBTC coins from [this service](https://coinfaucet.eu/en/btc-testnet/).
+
+### Main features
+* Login/Logout with BitGo account
+* Main page - view all user's TBTC wallets
+* Wallet page
+  * current balance
+  * last transactions
+  * send money button
+  * periodical auto update
 
 ## Requirements
 * node v>=8
